@@ -9,10 +9,10 @@
 /* Begin PBXBuildFile section */
 		F633A5EA225F4B4200A230BB /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = F633A5E9225F4B4200A230BB /* AppDelegate.swift */; };
 		F633A5EC225F4B4200A230BB /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F633A5EB225F4B4200A230BB /* ViewController.swift */; };
-		F633A5EF225F4B4200A230BB /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = F633A5ED225F4B4200A230BB /* Main.storyboard */; };
 		F633A5F1225F4B4200A230BB /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = F633A5F0225F4B4200A230BB /* Assets.xcassets */; };
 		F633A5F4225F4B4200A230BB /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = F633A5F2225F4B4200A230BB /* LaunchScreen.storyboard */; };
 		F633A5FF225F4B4200A230BB /* DensityDataTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = F633A5FE225F4B4200A230BB /* DensityDataTests.swift */; };
+		F633A60A225F4BAF00A230BB /* README.md in Resources */ = {isa = PBXBuildFile; fileRef = F633A609225F4BAE00A230BB /* README.md */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -29,13 +29,13 @@
 		F633A5E6225F4B4200A230BB /* DensityData.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = DensityData.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		F633A5E9225F4B4200A230BB /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		F633A5EB225F4B4200A230BB /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
-		F633A5EE225F4B4200A230BB /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		F633A5F0225F4B4200A230BB /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		F633A5F3225F4B4200A230BB /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		F633A5F5225F4B4200A230BB /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		F633A5FA225F4B4200A230BB /* DensityDataTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = DensityDataTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		F633A5FE225F4B4200A230BB /* DensityDataTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DensityDataTests.swift; sourceTree = "<group>"; };
 		F633A600225F4B4200A230BB /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		F633A609225F4BAE00A230BB /* README.md */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -59,6 +59,7 @@
 		F633A5DD225F4B4200A230BB = {
 			isa = PBXGroup;
 			children = (
+				F633A609225F4BAE00A230BB /* README.md */,
 				F633A5E8225F4B4200A230BB /* DensityData */,
 				F633A5FD225F4B4200A230BB /* DensityDataTests */,
 				F633A5E7225F4B4200A230BB /* Products */,
@@ -79,7 +80,6 @@
 			children = (
 				F633A5E9225F4B4200A230BB /* AppDelegate.swift */,
 				F633A5EB225F4B4200A230BB /* ViewController.swift */,
-				F633A5ED225F4B4200A230BB /* Main.storyboard */,
 				F633A5F0225F4B4200A230BB /* Assets.xcassets */,
 				F633A5F2225F4B4200A230BB /* LaunchScreen.storyboard */,
 				F633A5F5225F4B4200A230BB /* Info.plist */,
@@ -177,9 +177,9 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				F633A60A225F4BAF00A230BB /* README.md in Resources */,
 				F633A5F4225F4B4200A230BB /* LaunchScreen.storyboard in Resources */,
 				F633A5F1225F4B4200A230BB /* Assets.xcassets in Resources */,
-				F633A5EF225F4B4200A230BB /* Main.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -221,14 +221,6 @@
 /* End PBXTargetDependency section */
 
 /* Begin PBXVariantGroup section */
-		F633A5ED225F4B4200A230BB /* Main.storyboard */ = {
-			isa = PBXVariantGroup;
-			children = (
-				F633A5EE225F4B4200A230BB /* Base */,
-			);
-			name = Main.storyboard;
-			sourceTree = "<group>";
-		};
 		F633A5F2225F4B4200A230BB /* LaunchScreen.storyboard */ = {
 			isa = PBXVariantGroup;
 			children = (
@@ -363,13 +355,14 @@
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = 6APHY676XK;
 				INFOPLIST_FILE = DensityData/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 12.1;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = com.cincas.DensityData;
+				PRODUCT_BUNDLE_IDENTIFIER = com.cincas.densitydata;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				SWIFT_VERSION = 5.0;
+				SWIFT_VERSION = 4.2;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
 			name = Debug;
@@ -381,13 +374,14 @@
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = 6APHY676XK;
 				INFOPLIST_FILE = DensityData/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 12.1;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = com.cincas.DensityData;
+				PRODUCT_BUNDLE_IDENTIFIER = com.cincas.densitydata;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				SWIFT_VERSION = 5.0;
+				SWIFT_VERSION = 4.2;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
 			name = Release;
