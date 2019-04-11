@@ -13,6 +13,9 @@
 		F633A5F4225F4B4200A230BB /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = F633A5F2225F4B4200A230BB /* LaunchScreen.storyboard */; };
 		F633A5FF225F4B4200A230BB /* DensityDataTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = F633A5FE225F4B4200A230BB /* DensityDataTests.swift */; };
 		F633A60A225F4BAF00A230BB /* README.md in Resources */ = {isa = PBXBuildFile; fileRef = F633A609225F4BAE00A230BB /* README.md */; };
+		F68C07C8225F512800B54F6A /* DensityDataAPI.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = F633A60C225F4CF800A230BB /* DensityDataAPI.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		F68C07CB225F52AD00B54F6A /* DataGridViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = F68C07CA225F52AD00B54F6A /* DataGridViewModel.swift */; };
+		F68C07CD225F535C00B54F6A /* API.swift in Sources */ = {isa = PBXBuildFile; fileRef = F68C07CC225F535C00B54F6A /* API.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -25,6 +28,20 @@
 		};
 /* End PBXContainerItemProxy section */
 
+/* Begin PBXCopyFilesBuildPhase section */
+		F68C07C9225F512800B54F6A /* Embed Frameworks */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 10;
+			files = (
+				F68C07C8225F512800B54F6A /* DensityDataAPI.framework in Embed Frameworks */,
+			);
+			name = "Embed Frameworks";
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXCopyFilesBuildPhase section */
+
 /* Begin PBXFileReference section */
 		F633A5E6225F4B4200A230BB /* DensityData.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = DensityData.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		F633A5E9225F4B4200A230BB /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -36,6 +53,9 @@
 		F633A5FE225F4B4200A230BB /* DensityDataTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DensityDataTests.swift; sourceTree = "<group>"; };
 		F633A600225F4B4200A230BB /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		F633A609225F4BAE00A230BB /* README.md */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; };
+		F633A60C225F4CF800A230BB /* DensityDataAPI.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = DensityDataAPI.framework; sourceTree = "<group>"; };
+		F68C07CA225F52AD00B54F6A /* DataGridViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DataGridViewModel.swift; sourceTree = "<group>"; };
+		F68C07CC225F535C00B54F6A /* API.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = API.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -62,6 +82,7 @@
 				F633A609225F4BAE00A230BB /* README.md */,
 				F633A5E8225F4B4200A230BB /* DensityData */,
 				F633A5FD225F4B4200A230BB /* DensityDataTests */,
+				F633A60B225F4CF800A230BB /* Frameworks */,
 				F633A5E7225F4B4200A230BB /* Products */,
 			);
 			sourceTree = "<group>";
@@ -80,6 +101,8 @@
 			children = (
 				F633A5E9225F4B4200A230BB /* AppDelegate.swift */,
 				F633A5EB225F4B4200A230BB /* ViewController.swift */,
+				F68C07CA225F52AD00B54F6A /* DataGridViewModel.swift */,
+				F68C07CC225F535C00B54F6A /* API.swift */,
 				F633A5F0225F4B4200A230BB /* Assets.xcassets */,
 				F633A5F2225F4B4200A230BB /* LaunchScreen.storyboard */,
 				F633A5F5225F4B4200A230BB /* Info.plist */,
@@ -96,6 +119,14 @@
 			path = DensityDataTests;
 			sourceTree = "<group>";
 		};
+		F633A60B225F4CF800A230BB /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				F633A60C225F4CF800A230BB /* DensityDataAPI.framework */,
+			);
+			path = Frameworks;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -106,6 +137,7 @@
 				F633A5E2225F4B4200A230BB /* Sources */,
 				F633A5E3225F4B4200A230BB /* Frameworks */,
 				F633A5E4225F4B4200A230BB /* Resources */,
+				F68C07C9225F512800B54F6A /* Embed Frameworks */,
 			);
 			buildRules = (
 			);
@@ -197,7 +229,9 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				F68C07CB225F52AD00B54F6A /* DataGridViewModel.swift in Sources */,
 				F633A5EC225F4B4200A230BB /* ViewController.swift in Sources */,
+				F68C07CD225F535C00B54F6A /* API.swift in Sources */,
 				F633A5EA225F4B4200A230BB /* AppDelegate.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -354,6 +388,11 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = 6APHY676XK;
+				ENABLE_BITCODE = NO;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)/Frameworks",
+				);
 				INFOPLIST_FILE = DensityData/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 12.1;
 				LD_RUNPATH_SEARCH_PATHS = (
@@ -373,6 +412,11 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = 6APHY676XK;
+				ENABLE_BITCODE = NO;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)/Frameworks",
+				);
 				INFOPLIST_FILE = DensityData/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 12.1;
 				LD_RUNPATH_SEARCH_PATHS = (
