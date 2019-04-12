@@ -1,13 +1,13 @@
 //  Copyright © 2019 cincas. All rights reserved.
 
-import DensityDataAPI
+import Foundation
 
 protocol APIClient {
-  func getDataSource() -> DataSource
-  func data(at index: UInt) throws -> [DataUnit]?
+  var datasource: Datasource { get }
+  func data(at index: Int) -> Result<[DataUnit]?, APIError>
 }
 
-protocol DataSource {
+protocol Datasource {
   var columns: UInt { get }
   var rows: UInt { get }
   var dataSize: UInt { get }
@@ -18,14 +18,12 @@ protocol DataUnit {
   var y: UInt { get }
 }
 
-extension Grid: DataSource {}
-extension DataPoint: DataUnit {}
-extension DensityDataAPI: APIClient {
-  func getDataSource() -> DataSource {
-    return getGrid()
-  }
-  
-  func data(at index: UInt) throws -> [DataUnit]? {
-    return try getData(index: index)
-  }
+enum APIError: LocalizedError {
+  case dataError
+  case unknown(Error)
+}
+
+enum Result<Value, Error: Swift.Error> {
+  case success(Value)
+  case failed(Error)
 }
