@@ -35,7 +35,7 @@ class DataGridViewModelTests: XCTestCase {
     let apiClient = MockAPIClient(datasource: MockDatasource.random(), dataSet: dataSet)
     let viewModel = DataGridViewModel(apiClient: apiClient)
     dataSet.enumerated().forEach { index, expected in
-      let actual = viewModel.data(at: index)
+      let actual = viewModel.getData(at: index)
       switch actual {
       case let .success(values):
         XCTAssertTrue(isSame(lhs: values, rhs: expected))

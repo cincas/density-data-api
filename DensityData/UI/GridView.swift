@@ -17,7 +17,7 @@ class GridView: UIView {
   
   func indexChanged(to index: Int) {
     guard let viewModel = viewModel else { return }
-    let result = viewModel.data(at: index)
+    let result = viewModel.getData(at: index)
     print("""
       Index: \(index)
       Current data: \(result)

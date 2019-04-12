@@ -29,7 +29,7 @@ class DataGridViewModel {
     apiClient = newAPIClient  
   }
   
-  func data(at index: Int) -> Result<[DataUnit]?, APIError> {
+  func getData(at index: Int) -> Result<[DataUnit]?, APIError> {
     return apiClient.data(at: index)
   }
 }
