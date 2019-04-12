@@ -27,20 +27,43 @@ struct TestGrid: Datasource {
   let columns: UInt
   let rows: UInt
   let dataSize: UInt
+  
+  func mockDataSet() -> [[DataUnit]?] {
+    return (0..<Int(dataSize)).map { _ in
+      makeDataEntry(in: self)
+    }
+  }
+  
+  private func makeDataEntry(in datasource: TestGrid) -> [DataUnit]? {
+    let numberOfUnits = Int.random(in: 1...50)
+    return (0..<numberOfUnits).map { _ in TestDataPoint.random(in: datasource) }
+  }
+  
 }
 
 struct TestDataPoint: DataUnit {
   let x: UInt
   let y: UInt
+  static func random(in datasource: Datasource) -> DataUnit {
+    return random(maxX: datasource.columns, maxY: datasource.rows)
+  }
+  
+  static func random(maxX: UInt, maxY: UInt) -> DataUnit {
+    let x = UInt(arc4random_uniform(UInt32(maxX)))
+    let y = UInt(arc4random_uniform(UInt32(maxY)))
+    return TestDataPoint(x: x, y: y)
+  }
 }
 
 struct TestAPI: APIClient {
-  let datasource: Datasource = TestGrid(columns: 3, rows: 3, dataSize: 3)
-  let dataSet: [[DataUnit]?] = [
-    [TestDataPoint(x: 0, y: 0)],
-    [TestDataPoint(x: 1, y: 2), TestDataPoint(x: 2, y: 1)],
-    [TestDataPoint(x: 0, y: 0)]
-  ]
+  let dataSet: [[DataUnit]?]
+  let datasource: Datasource
+  
+  init() {
+    let testGrid = TestGrid(columns: 30, rows: 30, dataSize: 10000)
+    datasource = testGrid
+    dataSet = testGrid.mockDataSet()
+  }
   
   func data(at index: Int) -> Result<[DataUnit]?, APIError> {
     return .success(dataSet[index])

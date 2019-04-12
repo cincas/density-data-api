@@ -27,3 +27,7 @@ enum Result<Value, Error: Swift.Error> {
   case success(Value)
   case failed(Error)
 }
+
+func ==(lhs: DataUnit, rhs: DataUnit) -> Bool {
+  return lhs.x == rhs.x && lhs.y == rhs.y
+}

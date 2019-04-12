@@ -5,7 +5,7 @@ import UIKit
 // Ideally, should use things like ReactiveSwift/RxSwift to do data binding
 protocol DataGridViewModelDelegate: class {
   func loadingStarted()
-  func loadingCompleted()
+  func loadingCompleted(_ configuration: DatasourceConfiguration)
   
   /// Loading progress in percentage
   func loadingProgressUpdated(_ progress: CGFloat)
@@ -17,6 +17,7 @@ class DataGridViewModel {
   private var apiClient: APIClient {
     didSet {
       datasource = apiClient.datasource
+      configuration = nil
       processor?.stop()
       processor = DataProcessor(apiClient: apiClient)
       processor?.delegate = self
@@ -26,6 +27,8 @@ class DataGridViewModel {
   private(set) var datasource: Datasource
   private var processor: DataProcessor?
   weak var delegate: DataGridViewModelDelegate?
+  private(set) var configuration: DatasourceConfiguration?
+  
   init(apiClient: APIClient) {
     self.apiClient = apiClient
     self.datasource = apiClient.datasource
@@ -51,13 +54,18 @@ class DataGridViewModel {
     delegate?.loadingStarted()
     processor?.stop()
     processor?.start { [weak self] result in
-      print("receive data: \(result.count)")
-      self?.delegate?.loadingCompleted()
+      print("receive configuration")
+      self?.configuration = result
+      self?.delegate?.loadingCompleted(result)
     }
   }
 
   func resetAPIClient(to newAPIClient: APIClient) {
     apiClient = newAPIClient
+  }
+  
+  func snapshot(at index: Int) -> DatasourceSnapshot? {
+    return configuration?.snapshot(at: index)
   }
   
   func getData(at index: Int) -> Result<[DataUnit]?, APIError> {
@@ -67,7 +75,6 @@ class DataGridViewModel {
 
 extension DataGridViewModel: DataProcessorDelegate {
   func progressUpdated(_ progress: Int) {
-    print("Finish processing: \(progress)")
     let percentage = CGFloat(progress + 1) / CGFloat(datasource.dataSize)
     delegate?.loadingProgressUpdated(percentage)
   }

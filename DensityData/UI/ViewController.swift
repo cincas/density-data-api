@@ -46,6 +46,13 @@ class ViewController: UIViewController {
     return view
   }()
   
+  private let progressView: UIProgressView = {
+    let view = UIProgressView(progressViewStyle: .bar)
+    view.backgroundColor = .red
+    view.tintColor = .blue
+    return view
+  }()
+  
   override func loadView() {
     let view = UIView()
     view.backgroundColor = .white
@@ -58,12 +65,18 @@ class ViewController: UIViewController {
     containerView.addSubview(contentView)
     scrollView.addSubview(containerView)
     
-    [datasourceInfoLabel, gridView, slider, UIView()].forEach { contentView.addArrangedSubview($0) }
+    [datasourceInfoLabel,
+     progressView,
+     gridView,
+     slider,
+     UIView()]
+      .forEach { contentView.addArrangedSubview($0) }
     
     scrollView.pinEdges(to: view)
     containerView.pinEdges(to: scrollView)
     contentView.translatesAutoresizingMaskIntoConstraints = false
     gridView.translatesAutoresizingMaskIntoConstraints = false
+    progressView.translatesAutoresizingMaskIntoConstraints = false
     [
       containerView.widthAnchor.constraint(equalTo: scrollView.widthAnchor, multiplier: 1.0),
       containerView.bottomAnchor.constraint(lessThanOrEqualToSystemSpacingBelow: contentView.bottomAnchor,
@@ -72,7 +85,9 @@ class ViewController: UIViewController {
       contentView.trailingAnchor.constraint(equalTo: containerView.trailingAnchor),
       contentView.topAnchor.constraint(equalTo: containerView.topAnchor),
       contentView.leadingAnchor.constraint(equalTo: containerView.leadingAnchor),
-      contentView.bottomAnchor.constraint(lessThanOrEqualTo: containerView.bottomAnchor)
+      contentView.bottomAnchor.constraint(lessThanOrEqualTo: containerView.bottomAnchor),
+      progressView.heightAnchor.constraint(equalToConstant: 35),
+      progressView.widthAnchor.constraint(equalTo: slider.widthAnchor)
     ].forEach { $0.isActive = true }
   }
   
@@ -116,19 +131,26 @@ class ViewController: UIViewController {
 
 extension ViewController: DataGridViewModelDelegate {
   func loadingStarted() {
-    slider.isUserInteractionEnabled = false
+    DispatchQueue.main.async {
+      self.slider.isUserInteractionEnabled = false
+      self.progressView.progress = 0.0
+    }
   }
   
-  func loadingCompleted() {
-    slider.isUserInteractionEnabled = true
+  func loadingCompleted(_ configuration: DatasourceConfiguration) {
+    DispatchQueue.main.async {
+      self.slider.isUserInteractionEnabled = true
+    }
   }
   
   func loadingProgressUpdated(_ progress: CGFloat) {
+    DispatchQueue.main.async {
+      self.progressView.progress = Float(progress)
+    }
     
   }
   
   func loadingFailedAt(_ index: Int) {
     
   }
-  
 }

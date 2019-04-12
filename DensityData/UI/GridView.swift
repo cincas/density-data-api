@@ -17,10 +17,10 @@ class GridView: UIView {
   
   func indexChanged(to index: Int) {
     guard let viewModel = viewModel else { return }
-    let result = viewModel.getData(at: index)
+    let result = viewModel.snapshot(at: index)
     print("""
       Index: \(index)
-      Current data: \(result)
+      Current data: \(result?.appearanceResults ?? [:])
       """)
   }
   
