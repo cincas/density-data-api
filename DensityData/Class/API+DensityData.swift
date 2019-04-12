@@ -60,7 +60,7 @@ struct TestAPI: APIClient {
   let datasource: Datasource
   
   init() {
-    let testGrid = TestGrid(columns: 30, rows: 30, dataSize: 10000)
+    let testGrid = TestGrid(columns: 30, rows: 30, dataSize: 1000)
     datasource = testGrid
     dataSet = testGrid.mockDataSet()
   }

@@ -17,13 +17,13 @@ class ViewController: UIViewController {
   private let slider: UISlider = {
     let view = UISlider()
     // TODO: Implement continuous value change
-    view.isContinuous = false
+    view.isContinuous = true
     return view
   }()
   
   private let gridView: GridView = {
     let view = GridView()
-    view.backgroundColor = .black
+    view.backgroundColor = .white
     return view
   }()
   
@@ -53,6 +53,12 @@ class ViewController: UIViewController {
     return view
   }()
   
+  private let indexLabel: UILabel = {
+    let view = UILabel()
+    view.textColor = .black
+    return view
+  }()
+  
   override func loadView() {
     let view = UIView()
     view.backgroundColor = .white
@@ -68,11 +74,11 @@ class ViewController: UIViewController {
     [datasourceInfoLabel,
      progressView,
      gridView,
-     slider,
+     slider, indexLabel,
      UIView()]
       .forEach { contentView.addArrangedSubview($0) }
     
-    scrollView.pinEdges(to: view)
+    scrollView.pinEdges(to: view.readableContentGuide)
     containerView.pinEdges(to: scrollView)
     contentView.translatesAutoresizingMaskIntoConstraints = false
     gridView.translatesAutoresizingMaskIntoConstraints = false
@@ -102,9 +108,19 @@ class ViewController: UIViewController {
     applyDatasource(animated: false)
   }
   
+  override func viewWillTransition(to size: CGSize, with coordinator: UIViewControllerTransitionCoordinator) {
+    super.viewWillTransition(to: size, with: coordinator)
+    gridView.shouldRedraw = true
+  }
+  
   @objc private func onSliderValueChanged(_ sender: UISlider) {
     let index = Int(roundf(sender.value))
+    onIndexChanged(to: index)
+  }
+  
+  private func onIndexChanged(to index: Int) {
     gridView.indexChanged(to: index)
+    indexLabel.text = "Current index: \(index + 1)"
   }
   
   @objc private func onResetTapped(_ sender: UIBarButtonItem) {
@@ -116,7 +132,7 @@ class ViewController: UIViewController {
   private func applyDatasource(animated: Bool = true) {
     viewModel.loadDatasource()
     slider.minimumValue = 0.0
-    slider.maximumValue = Float(viewModel.datasource.dataSize)
+    slider.maximumValue = Float(viewModel.datasource.dataSize - 1)
     slider.value = 0.0
     datasourceInfoLabel.text = viewModel.datasourceInfo
     gridView.apply(viewModel: self.viewModel)
@@ -125,21 +141,24 @@ class ViewController: UIViewController {
         self.view.layoutIfNeeded()
       }
     }
-    
   }
 }
 
 extension ViewController: DataGridViewModelDelegate {
   func loadingStarted() {
     DispatchQueue.main.async {
-      self.slider.isUserInteractionEnabled = false
+      self.slider.isHidden = true
+      self.indexLabel.isHidden = true
       self.progressView.progress = 0.0
     }
   }
   
   func loadingCompleted(_ configuration: DatasourceConfiguration) {
     DispatchQueue.main.async {
-      self.slider.isUserInteractionEnabled = true
+      self.slider.isHidden = false
+      self.indexLabel.isHidden = false
+      self.gridView.drawGrid()
+      self.onIndexChanged(to: 0)
     }
   }
   
