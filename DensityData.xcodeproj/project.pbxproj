@@ -21,6 +21,9 @@
 		F68E15072260080B00AFA68E /* API+DensityData.swift in Sources */ = {isa = PBXBuildFile; fileRef = F68E15062260080B00AFA68E /* API+DensityData.swift */; };
 		F68E15092260113600AFA68E /* GridView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F68E15082260113600AFA68E /* GridView.swift */; };
 		F68E150B2260171400AFA68E /* UIView+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = F68E150A2260171400AFA68E /* UIView+Extensions.swift */; };
+		F68E15112260292400AFA68E /* DataProcessor.swift in Sources */ = {isa = PBXBuildFile; fileRef = F68E15102260292400AFA68E /* DataProcessor.swift */; };
+		F68E15152260494800AFA68E /* DataProcessorTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = F68E15142260494800AFA68E /* DataProcessorTests.swift */; };
+		F68E151622604DEF00AFA68E /* DensityDataAPI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F624F12A225F6F4E00AFFEC0 /* DensityDataAPI.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -65,6 +68,8 @@
 		F68E15062260080B00AFA68E /* API+DensityData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "API+DensityData.swift"; sourceTree = "<group>"; };
 		F68E15082260113600AFA68E /* GridView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GridView.swift; sourceTree = "<group>"; };
 		F68E150A2260171400AFA68E /* UIView+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIView+Extensions.swift"; sourceTree = "<group>"; };
+		F68E15102260292400AFA68E /* DataProcessor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DataProcessor.swift; sourceTree = "<group>"; };
+		F68E15142260494800AFA68E /* DataProcessorTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DataProcessorTests.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -80,6 +85,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				F68E151622604DEF00AFA68E /* DensityDataAPI.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -121,9 +127,10 @@
 		F633A5FD225F4B4200A230BB /* DensityDataTests */ = {
 			isa = PBXGroup;
 			children = (
+				F633A600225F4B4200A230BB /* Info.plist */,
 				F68C07CE225F586D00B54F6A /* MockAPIClient.swift */,
 				F633A5FE225F4B4200A230BB /* DataGridViewModelTests.swift */,
-				F633A600225F4B4200A230BB /* Info.plist */,
+				F68E15142260494800AFA68E /* DataProcessorTests.swift */,
 			);
 			path = DensityDataTests;
 			sourceTree = "<group>";
@@ -152,6 +159,7 @@
 			children = (
 				F68C07CC225F535C00B54F6A /* API.swift */,
 				F68E15062260080B00AFA68E /* API+DensityData.swift */,
+				F68E15102260292400AFA68E /* DataProcessor.swift */,
 			);
 			path = Class;
 			sourceTree = "<group>";
@@ -267,6 +275,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				F68E15112260292400AFA68E /* DataProcessor.swift in Sources */,
 				F68E150B2260171400AFA68E /* UIView+Extensions.swift in Sources */,
 				F68C07CB225F52AD00B54F6A /* DataGridViewModel.swift in Sources */,
 				F633A5EC225F4B4200A230BB /* ViewController.swift in Sources */,
@@ -283,6 +292,7 @@
 			files = (
 				F633A5FF225F4B4200A230BB /* DataGridViewModelTests.swift in Sources */,
 				F68C07CF225F586D00B54F6A /* MockAPIClient.swift in Sources */,
+				F68E15152260494800AFA68E /* DataProcessorTests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -484,6 +494,10 @@
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = 6APHY676XK;
 				ENABLE_BITCODE = YES;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)/Frameworks",
+				);
 				INFOPLIST_FILE = DensityDataTests/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 12.1;
 				LD_RUNPATH_SEARCH_PATHS = (
@@ -507,6 +521,10 @@
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = 6APHY676XK;
 				ENABLE_BITCODE = YES;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)/Frameworks",
+				);
 				INFOPLIST_FILE = DensityDataTests/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 12.1;
 				LD_RUNPATH_SEARCH_PATHS = (

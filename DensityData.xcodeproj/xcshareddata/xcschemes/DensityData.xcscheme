@@ -37,6 +37,11 @@
                BlueprintName = "DensityDataTests"
                ReferencedContainer = "container:DensityData.xcodeproj">
             </BuildableReference>
+            <SkippedTests>
+               <Test
+                  Identifier = "DataProcessorTests">
+               </Test>
+            </SkippedTests>
          </TestableReference>
       </Testables>
       <MacroExpansion>
