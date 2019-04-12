@@ -19,6 +19,8 @@
 		F68C07CD225F535C00B54F6A /* API.swift in Sources */ = {isa = PBXBuildFile; fileRef = F68C07CC225F535C00B54F6A /* API.swift */; };
 		F68C07CF225F586D00B54F6A /* MockAPIClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = F68C07CE225F586D00B54F6A /* MockAPIClient.swift */; };
 		F68E15072260080B00AFA68E /* API+DensityData.swift in Sources */ = {isa = PBXBuildFile; fileRef = F68E15062260080B00AFA68E /* API+DensityData.swift */; };
+		F68E15092260113600AFA68E /* GridView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F68E15082260113600AFA68E /* GridView.swift */; };
+		F68E150B2260171400AFA68E /* UIView+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = F68E150A2260171400AFA68E /* UIView+Extensions.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -61,6 +63,8 @@
 		F68C07CC225F535C00B54F6A /* API.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = API.swift; sourceTree = "<group>"; };
 		F68C07CE225F586D00B54F6A /* MockAPIClient.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockAPIClient.swift; sourceTree = "<group>"; };
 		F68E15062260080B00AFA68E /* API+DensityData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "API+DensityData.swift"; sourceTree = "<group>"; };
+		F68E15082260113600AFA68E /* GridView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GridView.swift; sourceTree = "<group>"; };
+		F68E150A2260171400AFA68E /* UIView+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIView+Extensions.swift"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -105,14 +109,11 @@
 		F633A5E8225F4B4200A230BB /* DensityData */ = {
 			isa = PBXGroup;
 			children = (
-				F633A5E9225F4B4200A230BB /* AppDelegate.swift */,
-				F633A5EB225F4B4200A230BB /* ViewController.swift */,
-				F68C07CA225F52AD00B54F6A /* DataGridViewModel.swift */,
-				F68C07CC225F535C00B54F6A /* API.swift */,
-				F68E15062260080B00AFA68E /* API+DensityData.swift */,
-				F633A5F0225F4B4200A230BB /* Assets.xcassets */,
-				F633A5F2225F4B4200A230BB /* LaunchScreen.storyboard */,
 				F633A5F5225F4B4200A230BB /* Info.plist */,
+				F633A5E9225F4B4200A230BB /* AppDelegate.swift */,
+				F68E150D2260265300AFA68E /* Class */,
+				F68E150C2260264300AFA68E /* UI */,
+				F68E150F2260267C00AFA68E /* Resources */,
 			);
 			path = DensityData;
 			sourceTree = "<group>";
@@ -133,6 +134,35 @@
 				F624F12A225F6F4E00AFFEC0 /* DensityDataAPI.framework */,
 			);
 			path = Frameworks;
+			sourceTree = "<group>";
+		};
+		F68E150C2260264300AFA68E /* UI */ = {
+			isa = PBXGroup;
+			children = (
+				F633A5EB225F4B4200A230BB /* ViewController.swift */,
+				F68C07CA225F52AD00B54F6A /* DataGridViewModel.swift */,
+				F68E15082260113600AFA68E /* GridView.swift */,
+				F68E150A2260171400AFA68E /* UIView+Extensions.swift */,
+			);
+			path = UI;
+			sourceTree = "<group>";
+		};
+		F68E150D2260265300AFA68E /* Class */ = {
+			isa = PBXGroup;
+			children = (
+				F68C07CC225F535C00B54F6A /* API.swift */,
+				F68E15062260080B00AFA68E /* API+DensityData.swift */,
+			);
+			path = Class;
+			sourceTree = "<group>";
+		};
+		F68E150F2260267C00AFA68E /* Resources */ = {
+			isa = PBXGroup;
+			children = (
+				F633A5F0225F4B4200A230BB /* Assets.xcassets */,
+				F633A5F2225F4B4200A230BB /* LaunchScreen.storyboard */,
+			);
+			path = Resources;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -237,10 +267,12 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				F68E150B2260171400AFA68E /* UIView+Extensions.swift in Sources */,
 				F68C07CB225F52AD00B54F6A /* DataGridViewModel.swift in Sources */,
 				F633A5EC225F4B4200A230BB /* ViewController.swift in Sources */,
 				F68E15072260080B00AFA68E /* API+DensityData.swift in Sources */,
 				F68C07CD225F535C00B54F6A /* API.swift in Sources */,
+				F68E15092260113600AFA68E /* GridView.swift in Sources */,
 				F633A5EA225F4B4200A230BB /* AppDelegate.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

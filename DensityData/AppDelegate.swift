@@ -10,8 +10,12 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
                    didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
     let window = UIWindow(frame: UIScreen.main.bounds)
     self.window = window
+    
     let viewModel = DataGridViewModel(apiClient: DensityDataAPI())
-    window.rootViewController = ViewController(viewModel: viewModel)
+    let viewController = ViewController(viewModel: viewModel)
+    let navigationController = UINavigationController(rootViewController: viewController)
+    navigationController.navigationBar.prefersLargeTitles = true 
+    window.rootViewController = navigationController
     window.makeKeyAndVisible()
     return true
   }

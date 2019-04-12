@@ -15,6 +15,16 @@ class DataGridViewModel {
     self.datasource = apiClient.datasource
   }
   
+  // MARK: - Layout values
+  var datasourceInfo: String {
+    return """
+    Columns: \(datasource.columns)
+    Rows: \(datasource.rows)
+    Data size: \(datasource.dataSize)
+    """
+  }
+  
+  // MARK: - Actions
   func resetAPIClient(to newAPIClient: APIClient) {
     apiClient = newAPIClient  
   }
