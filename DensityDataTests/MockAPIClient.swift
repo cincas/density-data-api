@@ -41,6 +41,17 @@ struct MockDatasource: Datasource {
                           rows: UInt(rows),
                           dataSize: UInt(dataSize))
   }
+  
+  func mockDataSet() -> [[DataUnit]?] {
+    return (0..<Int(dataSize)).map { _ in
+      makeDataEntry(in: self)
+    }
+  }
+  
+  private func makeDataEntry(in datasource: MockDatasource) -> [DataUnit]? {
+    let numberOfUnits = Int.random(in: 1...50)
+    return (0..<numberOfUnits).map { _ in MockDataUnit.random(in: datasource) }
+  }
 }
 
 struct MockDataUnit: DataUnit {

@@ -8,10 +8,13 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
   var window: UIWindow?
   func application(_ application: UIApplication,
                    didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
+    if ProcessInfo.processInfo.environment["XCInjectBundleInto"] != nil {
+      return false
+    } 
     let window = UIWindow(frame: UIScreen.main.bounds)
     self.window = window
     
-    let viewModel = DataGridViewModel(apiClient: DensityDataAPI())
+    let viewModel = DataGridViewModel(apiClient: TestAPI())
     let viewController = ViewController(viewModel: viewModel)
     let navigationController = UINavigationController(rootViewController: viewController)
     navigationController.navigationBar.prefersLargeTitles = true 

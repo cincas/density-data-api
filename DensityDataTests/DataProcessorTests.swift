@@ -19,10 +19,7 @@ class DataProcessorTests: XCTestCase {
 
   func testMockAPIClientPerformance() {
     let datasource = MockDatasource(columns: 100, rows: 100, dataSize: 10000)
-    let dataSet: [[DataUnit]?] = (0..<Int(datasource.dataSize)).map { _ in
-      makeDataEntry(in: datasource)
-    }
-    let processor = DataProcessor(apiClient: MockAPIClient(datasource: datasource, dataSet: dataSet))
+    let processor = DataProcessor(apiClient: MockAPIClient(datasource: datasource, dataSet: datasource.mockDataSet()))
     
     let expectation = self.expectation(description: NSUUID().uuidString)
     measure {
@@ -32,10 +29,5 @@ class DataProcessorTests: XCTestCase {
       
     }
     wait(for: [expectation], timeout: 30.0)
-  }
-  
-  private func makeDataEntry(in datasource: MockDatasource) -> [DataUnit]? {
-    let numberOfUnits = Int.random(in: 1...50)
-    return (0..<numberOfUnits).map { _ in MockDataUnit.random(in: datasource) }
   }
 }

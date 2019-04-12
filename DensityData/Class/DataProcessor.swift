@@ -10,6 +10,7 @@ protocol DataProcessorDelegate: class {
 class DataProcessor {
   private let apiClient: APIClient
   private let queue = DispatchQueue(label: "data.process", qos: DispatchQoS.utility)
+  private var workItem: DispatchWorkItem?
   weak var delegate: DataProcessorDelegate?
   
   init(apiClient: APIClient) {
@@ -17,11 +18,20 @@ class DataProcessor {
   }
   
   func start(_ completion: @escaping ([DataUnit]) -> Void) {
-    let workItem = DispatchWorkItem {
+    workItem?.cancel()
+    workItem = nil
+    
+    let item = DispatchWorkItem {
       completion(self.load())
     }
     
-    queue.async(execute: workItem)
+    queue.asyncAfter(deadline: .now() + .seconds(3), execute: item)
+    workItem = item
+  }
+  
+  func stop() {
+    workItem?.cancel()
+    workItem = nil
   }
   
   private func load() -> [DataUnit] {

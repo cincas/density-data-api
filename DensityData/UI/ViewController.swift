@@ -78,11 +78,12 @@ class ViewController: UIViewController {
   
   override func viewDidLoad() {
     super.viewDidLoad()
-    title = "Density Data Graph"
+    title = viewModel.title
     slider.addTarget(self, action: #selector(onSliderValueChanged(_:)), for: .valueChanged)
     let resetBarItem = UIBarButtonItem(title: "Reset", style: .plain,
                                        target: self, action: #selector(onResetTapped(_:)))
     navigationItem.leftBarButtonItem = resetBarItem
+    viewModel.delegate = self
     applyDatasource(animated: false)
   }
   
@@ -93,11 +94,12 @@ class ViewController: UIViewController {
   
   @objc private func onResetTapped(_ sender: UIBarButtonItem) {
     // TODO: Decouple DensityDataAPI from view controller
-    viewModel.resetAPIClient(to: DensityDataAPI())
+    viewModel.resetAPIClient(to: TestAPI())
     applyDatasource()
   }
   
   private func applyDatasource(animated: Bool = true) {
+    viewModel.loadDatasource()
     slider.minimumValue = 0.0
     slider.maximumValue = Float(viewModel.datasource.dataSize)
     slider.value = 0.0
@@ -110,4 +112,23 @@ class ViewController: UIViewController {
     }
     
   }
+}
+
+extension ViewController: DataGridViewModelDelegate {
+  func loadingStarted() {
+    slider.isUserInteractionEnabled = false
+  }
+  
+  func loadingCompleted() {
+    slider.isUserInteractionEnabled = true
+  }
+  
+  func loadingProgressUpdated(_ progress: CGFloat) {
+    
+  }
+  
+  func loadingFailedAt(_ index: Int) {
+    
+  }
+  
 }
