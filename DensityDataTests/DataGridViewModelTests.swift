@@ -113,7 +113,7 @@ private class MockViewModelDelegate: DataGridViewModelDelegate {
     startedExpectation.fulfill()
   }
   
-  func loadingCompleted() {
+  func loadingCompleted(_ configuration: DatasourceConfiguration) {
     completedExpectation.fulfill()
   }
   

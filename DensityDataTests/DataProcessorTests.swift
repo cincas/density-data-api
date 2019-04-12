@@ -6,28 +6,107 @@ import DensityDataAPI
 
 // FIXME: Need to improve performance of DataProcessor
 class DataProcessorTests: XCTestCase {
-  func testDensityDataPerformance() {
-    let processor = DataProcessor(apiClient: DensityDataAPI())
-    let expectation = self.expectation(description: NSUUID().uuidString)
-    measure {
-      processor.start { _ in
-        expectation.fulfill()
-      }
-    }
-    wait(for: [expectation], timeout: 30.0)
-  }
-
-  func testMockAPIClientPerformance() {
-    let datasource = MockDatasource(columns: 100, rows: 100, dataSize: 10000)
-    let processor = DataProcessor(apiClient: MockAPIClient(datasource: datasource, dataSet: datasource.mockDataSet()))
+  func testProcessing() {
+    let dataSet: [[DataUnit]?] = [
+      [MockDataUnit(x: 0, y: 0)],
+      [MockDataUnit(x: 1, y: 1), MockDataUnit(x: 0, y: 2), MockDataUnit(x: 0, y: 1)],
+      [ExceptionDataUnit(isAccepted: true)],
+      [MockDataUnit(x: 1, y: 0), MockDataUnit(x: 1, y: 2), MockDataUnit(x: 0, y: 0)],
+      nil,
+      [MockDataUnit(x: 2, y: 1)],
+      [MockDataUnit(x: 2, y: 0)]
+    ]
     
-    let expectation = self.expectation(description: NSUUID().uuidString)
-    measure {
-      processor.start { _ in
-        expectation.fulfill()
+    let expectedAppearanceMap: AppearanceMap = [
+      DataUnitContainer(dataUnit: MockDataUnit(x: 0, y: 0)): 2,
+      DataUnitContainer(dataUnit: MockDataUnit(x: 0, y: 1)): 1,
+      DataUnitContainer(dataUnit: MockDataUnit(x: 0, y: 2)): 1,
+      DataUnitContainer(dataUnit: MockDataUnit(x: 1, y: 0)): 1,
+      DataUnitContainer(dataUnit: MockDataUnit(x: 1, y: 1)): 1,
+      DataUnitContainer(dataUnit: MockDataUnit(x: 1, y: 2)): 1,
+      DataUnitContainer(dataUnit: MockDataUnit(x: 2, y: 0)): 1,
+      DataUnitContainer(dataUnit: MockDataUnit(x: 2, y: 1)): 1,
+      DataUnitContainer(dataUnit: MockDataUnit(x: 2, y: 2)): NSNotFound,
+    ]
+    
+    let datasource = MockDatasource(columns: 3, rows: 3, dataSize: UInt(dataSet.count))
+    let processor = DataProcessor(apiClient: MockAPIClient(datasource: datasource,
+                                                           dataSet: dataSet))
+    
+    let loadExpectation = expectation(description: "Data set loading")
+    processor.start { configuration in
+      expectedAppearanceMap.forEach { unit, value in
+        guard let actual = configuration.appearanceMap[unit] else {
+          XCTAssertTrue(value == NSNotFound, "Missing appearance")
+          return
+        }
+        XCTAssertTrue(value == actual, "Appearance count should be same")
       }
-      
+      loadExpectation.fulfill()
     }
-    wait(for: [expectation], timeout: 30.0)
+    
+    wait(for: [loadExpectation], timeout: 10.0)
+  }
+  
+  func testSnapshot() {
+    let dataSet: [[DataUnit]?] = [
+      [MockDataUnit(x: 0, y: 0)],
+      [MockDataUnit(x: 1, y: 1), MockDataUnit(x: 0, y: 2), MockDataUnit(x: 0, y: 1)],
+      [ExceptionDataUnit(isAccepted: true)],
+      [MockDataUnit(x: 1, y: 0), MockDataUnit(x: 1, y: 2), MockDataUnit(x: 0, y: 0)],
+      nil,
+      [MockDataUnit(x: 2, y: 1), MockDataUnit(x: 0, y: 0)],
+      [MockDataUnit(x: 2, y: 0), MockDataUnit(x: 0, y: 0)]
+    ]
+    
+    let expectedResults: [Int: AppearanceResults] = [
+      2: [
+        DataUnitContainer(dataUnit: MockDataUnit(x: 0, y: 0)): 0.25,
+      ],
+      3: [
+        DataUnitContainer(dataUnit: MockDataUnit(x: 0, y: 0)): 0.5,
+      ],
+      4: [
+        DataUnitContainer(dataUnit: MockDataUnit(x: 0, y: 0)): 0.5,
+      ],
+      5: [
+        DataUnitContainer(dataUnit: MockDataUnit(x: 0, y: 0)): 0.75,
+      ],
+      6: [
+        DataUnitContainer(dataUnit: MockDataUnit(x: 0, y: 0)): 1.0,
+        DataUnitContainer(dataUnit: MockDataUnit(x: 0, y: 1)): 1.0,
+        DataUnitContainer(dataUnit: MockDataUnit(x: 0, y: 2)): 1.0,
+        DataUnitContainer(dataUnit: MockDataUnit(x: 1, y: 0)): 1.0,
+        DataUnitContainer(dataUnit: MockDataUnit(x: 1, y: 1)): 1.0,
+        DataUnitContainer(dataUnit: MockDataUnit(x: 1, y: 2)): 1.0,
+        DataUnitContainer(dataUnit: MockDataUnit(x: 2, y: 1)): 1.0,
+      ]
+    ]
+    
+    let datasource = MockDatasource(columns: 3, rows: 3, dataSize: UInt(dataSet.count))
+    let processor = DataProcessor(apiClient: MockAPIClient(datasource: datasource,
+                                                           dataSet: dataSet))
+    
+    let loadExpectation = expectation(description: "Data set loading")
+    processor.start { configuration in
+      expectedResults.forEach { index, expected in
+        let snapshot = configuration.snapshot(at: index)
+        self.assertAppearanceResult(expected, with: snapshot.appearanceResults)
+      }
+      loadExpectation.fulfill()
+    }
+    
+    wait(for: [loadExpectation], timeout: 10.0)
+  }
+  
+  private func assertAppearanceResult(_ expected: AppearanceResults, with actual: AppearanceResults) {
+    expected.forEach { unit, value in
+      guard let actual = actual[unit] else {
+        XCTFail("Missing appearance result")
+        return
+      }
+      XCTAssertTrue(value == actual,
+                    "Appearance count should be same: \(unit.x, unit.y) \(value) : \(actual)")
+    }
   }
 }
