@@ -14,7 +14,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     let window = UIWindow(frame: UIScreen.main.bounds)
     self.window = window
     
-    let viewModel = DataGridViewModel(apiClient: TestAPI())
+    let viewModel = DataGridViewModel(apiClient: DensityDataAPI())
     let viewController = ViewController(viewModel: viewModel)
     let navigationController = UINavigationController(rootViewController: viewController)
     navigationController.navigationBar.prefersLargeTitles = true 

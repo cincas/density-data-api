@@ -16,7 +16,6 @@ class ViewController: UIViewController {
   
   private let slider: UISlider = {
     let view = UISlider()
-    // TODO: Implement continuous value change
     view.isContinuous = true
     return view
   }()
@@ -125,7 +124,7 @@ class ViewController: UIViewController {
   
   @objc private func onResetTapped(_ sender: UIBarButtonItem) {
     // TODO: Decouple DensityDataAPI from view controller
-    viewModel.resetAPIClient(to: TestAPI())
+    viewModel.resetAPIClient(to: DensityDataAPI())
     applyDatasource()
   }
   
