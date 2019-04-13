@@ -54,7 +54,6 @@ class DataGridViewModel {
     delegate?.loadingStarted()
     processor?.stop()
     processor?.start { [weak self] result in
-      print("receive configuration")
       self?.configuration = result
       self?.delegate?.loadingCompleted(result)
     }
@@ -66,10 +65,6 @@ class DataGridViewModel {
   
   func snapshot(at index: Int) -> DatasourceSnapshot? {
     return configuration?.snapshot(at: index)
-  }
-  
-  func getData(at index: Int) -> Result<[DataUnit]?, APIError> {
-    return apiClient.data(at: index)
   }
 }
 

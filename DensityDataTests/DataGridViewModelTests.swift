@@ -22,39 +22,42 @@ class DataGridViewModelTests: XCTestCase {
     XCTAssertTrue(isSame(lhs: viewModel.datasource, rhs: dataSource))
   }
   
-  func testGetData() {
-    let datasource = MockDatasource.random()
+  func testGetSnapshot() {
     let dataSet: [[DataUnit]?] = [
-      [MockDataUnit.random(in: datasource)],
-      [MockDataUnit.random(in: datasource), MockDataUnit.random(in: datasource)],
+      [MockDataUnit(x: 0, y: 0)],
+      [MockDataUnit(x: 1, y: 1), MockDataUnit(x: 0, y: 2), MockDataUnit(x: 0, y: 1)],
       [ExceptionDataUnit(isAccepted: true)],
-      [ExceptionDataUnit(isAccepted: false)],
+      [MockDataUnit(x: 1, y: 0), MockDataUnit(x: 1, y: 2), MockDataUnit(x: 0, y: 0)],
       nil,
-      [MockDataUnit.random(in: datasource), MockDataUnit.random(in: datasource)]]
+      [MockDataUnit(x: 2, y: 1), MockDataUnit(x: 0, y: 0)],
+      [MockDataUnit(x: 2, y: 0), MockDataUnit(x: 0, y: 0)]
+    ]
+    let datasource = MockDatasource(columns: 3, rows: 3, dataSize: UInt(dataSet.count))
     
-    let apiClient = MockAPIClient(datasource: MockDatasource.random(), dataSet: dataSet)
+    let apiClient = MockAPIClient(datasource: datasource, dataSet: dataSet)
     let viewModel = DataGridViewModel(apiClient: apiClient)
-    dataSet.enumerated().forEach { index, expected in
-      let actual = viewModel.getData(at: index)
-      switch actual {
-      case let .success(values):
-        XCTAssertTrue(isSame(lhs: values, rhs: expected))
-        
-      case let .failed(error):
-        switch error {
-        case .dataError:
-          let acceptedException = expected?.compactMap { $0 as? ExceptionDataUnit }
-            .first { $0.isAccepted }
-          XCTAssertTrue(acceptedException != nil)
-          
-        case .unknown(_):
-          let unacceptedException = expected?.compactMap { $0 as? ExceptionDataUnit }
-            .first { !$0.isAccepted }
-          XCTAssertTrue(unacceptedException != nil)
-        }
-        break
-      }
+    viewModel.loadDatasource()
+    
+    let snapshotExpectation = expectation(description: "Snapshot should be ready")
+    var shouldBreak = false
+    var snapshot: DatasourceSnapshot?
+    while snapshot == nil {
+      snapshot = viewModel.snapshot(at: 0)
+      shouldBreak = snapshot != nil
     }
+    
+    guard let actual = snapshot else {
+      XCTFail("Unable to get snapshot")
+      return
+    }
+    
+    let expected = DatasourceSnapshot(appearanceResults: [
+        DataUnitContainer(dataUnit: MockDataUnit(x: 0, y: 0)): 0.25
+      ])
+    XCTAssertTrue(actual.appearanceResults == expected.appearanceResults)
+    snapshotExpectation.fulfill()
+    
+    wait(for: [snapshotExpectation], timeout: 10.0)
   }
   
   func testViewModelDelegate() {
