@@ -74,8 +74,8 @@ class DataGridViewModelTests: XCTestCase {
     viewModel.delegate = mockDelegate
     viewModel.loadDatasource()
     mockDelegate.progressUpdatedExpectation.expectedFulfillmentCount = dataSet.count
-    mockDelegate.failedExpectation.expectedFulfillmentCount = dataSet.compactMap { $0 as? [ExceptionDataUnit] }.count
-    wait(for: [mockDelegate.startedExpectation, mockDelegate.failedExpectation,
+
+    wait(for: [mockDelegate.startedExpectation,
                mockDelegate.buildingSnapshotsExpectation,
                mockDelegate.completedExpectation, mockDelegate.progressUpdatedExpectation],
          timeout: 5.0)
@@ -103,13 +103,11 @@ private class MockViewModelDelegate: DataGridViewModelDelegate {
   let startedExpectation: XCTestExpectation
   let completedExpectation: XCTestExpectation
   let progressUpdatedExpectation: XCTestExpectation
-  let failedExpectation: XCTestExpectation
   let buildingSnapshotsExpectation: XCTestExpectation
   init(testCase: XCTestCase) {
     startedExpectation = testCase.expectation(description: "loading.started")
     completedExpectation = testCase.expectation(description: "loading.completed")
     progressUpdatedExpectation = testCase.expectation(description: "loading.progress.updated")
-    failedExpectation = testCase.expectation(description: "loading.failed")
     buildingSnapshotsExpectation = testCase.expectation(description: "building.snapshots")
   }
   
@@ -124,11 +122,7 @@ private class MockViewModelDelegate: DataGridViewModelDelegate {
   func loadingProgressUpdated(_ progress: CGFloat) {
     progressUpdatedExpectation.fulfill()
   }
-  
-  func loadingFailedAt(_ index: Int) {
-    failedExpectation.fulfill()
-  }
-  
+
   func buildingSnapshots() {
     buildingSnapshotsExpectation.fulfill()
   }

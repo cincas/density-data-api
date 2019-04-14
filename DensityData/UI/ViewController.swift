@@ -61,6 +61,16 @@ class ViewController: UIViewController {
     return view
   }()
   
+  private let errorMessageLabel: UILabel = {
+    let view = UILabel()
+    view.numberOfLines = 0
+    view.textAlignment = .left
+    view.backgroundColor = .red
+    view.textColor = .white
+    view.font = UIFont.boldSystemFont(ofSize: 18)
+    return view
+  }()
+  
   override func loadView() {
     let view = UIView()
     view.backgroundColor = .white
@@ -75,6 +85,7 @@ class ViewController: UIViewController {
     
     [datasourceInfoLabel,
      progressView,
+     errorMessageLabel,
      gridView,
      slider, indexLabel,
      UIView()]
@@ -146,6 +157,11 @@ class ViewController: UIViewController {
       }
     }
   }
+  
+  private func displayErrorIndexesIfNeeded() {
+    errorMessageLabel.isHidden = viewModel.errorMessage == nil
+    errorMessageLabel.text = viewModel.errorMessage
+  }
 }
 
 extension ViewController: DataGridViewModelDelegate {
@@ -153,7 +169,9 @@ extension ViewController: DataGridViewModelDelegate {
     DispatchQueue.main.async {
       self.slider.isHidden = true
       self.indexLabel.isHidden = true
+      self.errorMessageLabel.isHidden = true
       self.progressView.progress = 0.0
+      self.progressView.status = nil
     }
   }
   
@@ -164,6 +182,7 @@ extension ViewController: DataGridViewModelDelegate {
       self.gridView.drawGrid()
       self.onIndexChanged(to: 0)
       self.progressView.status = "Completed"
+      self.displayErrorIndexesIfNeeded()
     }
   }
   
@@ -172,8 +191,6 @@ extension ViewController: DataGridViewModelDelegate {
       self.progressView.progress = Float(progress)
     }
   }
-  
-  func loadingFailedAt(_ index: Int) {}
   
   func buildingSnapshots() {
     DispatchQueue.main.async {

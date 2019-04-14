@@ -9,9 +9,7 @@ protocol DataGridViewModelDelegate: class {
   
   /// Loading progress in percentage
   func loadingProgressUpdated(_ progress: CGFloat)
-  
-  func loadingFailedAt(_ index: Int)
-  
+
   func buildingSnapshots()
 }
 
@@ -30,7 +28,7 @@ class DataGridViewModel {
   private var processor: DataProcessor?
   weak var delegate: DataGridViewModelDelegate?
   private(set) var configuration: DatasourceConfiguration?
-  
+  private var failedIndex: Atomic<[Int]> = Atomic([])
   init(apiClient: APIClient) {
     self.apiClient = apiClient
     self.datasource = apiClient.datasource
@@ -51,9 +49,20 @@ class DataGridViewModel {
     return "Density Data Graph"
   }
   
+  var errorMessage: String? {
+    guard failedIndex.value.count != 0 else { return nil }
+    let failedIndexesString = failedIndex.value
+      .compactMap { "\($0)" }
+      .joined(separator: ",")
+    return """
+    Data at these indexes are failed to load:
+    \(failedIndexesString)
+    """
+  }
   // MARK: - Actions
   func loadDatasource() {
     delegate?.loadingStarted()
+    failedIndex = Atomic([])
     processor?.stop()
     processor?.start { [weak self] result in
       self?.configuration = result
@@ -77,7 +86,8 @@ extension DataGridViewModel: DataProcessorDelegate {
       let percentage = CGFloat(index + 1) / CGFloat(datasource.dataSize)
       delegate?.loadingProgressUpdated(percentage)
     case let .failed(index):
-      delegate?.loadingFailedAt(index)
+      failedIndex.modify { $0.append(index) }
+      
     case .buildingSnapshots:
       delegate?.buildingSnapshots()
     }
