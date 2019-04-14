@@ -2,7 +2,7 @@
 
 import Foundation
 
-final class Atmoic<T> {
+final class Atomic<T> {
   private let queue = DispatchQueue(label: "atomic.queue")
   private var _value: T
   init(_ value: T) {

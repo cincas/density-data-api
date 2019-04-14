@@ -12,7 +12,7 @@ class DataProcessor {
   private let apiClient: APIClient
   private let queue = DispatchQueue(label: "data.process", qos: DispatchQoS.utility)
   private var workItem: DispatchWorkItem?
-  private(set) var processedItems: Atmoic<Int> = Atmoic(0)
+  private(set) var processedItems: Atomic<Int> = Atomic(0)
   
   init(apiClient: APIClient) {
     self.apiClient = apiClient
@@ -34,7 +34,7 @@ class DataProcessor {
   func stop() {
     workItem?.cancel()
     workItem = nil
-    processedItems = Atmoic(0)
+    processedItems = Atomic(0)
   }
 }
 
