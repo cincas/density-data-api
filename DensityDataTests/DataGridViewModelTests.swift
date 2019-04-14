@@ -80,6 +80,43 @@ class DataGridViewModelTests: XCTestCase {
                mockDelegate.completedExpectation, mockDelegate.progressUpdatedExpectation],
          timeout: 5.0)
   }
+  
+  func testUIValues() {
+    let dataSet: [[DataUnit]?] = [
+      [MockDataUnit(x: 0, y: 0)],
+      [MockDataUnit(x: 1, y: 1), MockDataUnit(x: 0, y: 2), MockDataUnit(x: 0, y: 1)],
+      [ExceptionDataUnit(isAccepted: true)],
+      [MockDataUnit(x: 1, y: 0), MockDataUnit(x: 1, y: 2), MockDataUnit(x: 0, y: 0)],
+      nil,
+      [MockDataUnit(x: 2, y: 1), MockDataUnit(x: 0, y: 0)],
+      [MockDataUnit(x: 2, y: 0), MockDataUnit(x: 0, y: 0)]
+    ]
+    
+    let datasource = MockDatasource(columns: 3, rows: 3, dataSize: UInt(dataSet.count))
+    let apiClient = MockAPIClient(datasource: datasource, dataSet: dataSet)
+    let viewModel = DataGridViewModel(apiClient: apiClient)
+    
+    let testDelegate = TestViewModelDelegate()
+    let errorMessageExpectation = expectation(description: "error message valid")
+    testDelegate.onLoadingCompleted = {
+      let expectdeFailedIndexString = "2"
+      XCTAssertNotNil(viewModel.errorMessage)
+      XCTAssertTrue(viewModel.errorMessage?.contains(expectdeFailedIndexString) ?? false)
+      errorMessageExpectation.fulfill()
+    }
+    viewModel.delegate = testDelegate
+    viewModel.loadDatasource()
+    let expectedDatasourceInfo = """
+    Columns: \(datasource.columns)
+    Rows: \(datasource.rows)
+    Data size: \(datasource.dataSize)
+    """
+    
+    XCTAssertEqual(expectedDatasourceInfo, viewModel.datasourceInfo)
+    
+    XCTAssertEqual("Density Data Graph", viewModel.title)
+    wait(for: [errorMessageExpectation], timeout: 4.0)
+  }
 }
 
 private extension DataGridViewModelTests {
@@ -96,6 +133,22 @@ private extension DataGridViewModelTests {
     return lhsUnits.elementsEqual(rhsUnits) { lhsUnit, rhsUnit -> Bool in
       return lhsUnit.x == rhsUnit.x && lhsUnit.y == rhsUnit.y
     }
+  }
+}
+
+private class TestViewModelDelegate: DataGridViewModelDelegate {
+  var onLoadingCompleted: (() -> Void)?
+  func loadingStarted() {
+  }
+  
+  func loadingCompleted(_ configuration: DatasourceConfiguration) {
+    onLoadingCompleted?()
+  }
+  
+  func loadingProgressUpdated(_ progress: CGFloat) {
+  }
+  
+  func buildingSnapshots() {
   }
 }
 
