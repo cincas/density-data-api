@@ -2,15 +2,19 @@
 
 import Foundation
 
+/// Storing appearance total count
 typealias AppearanceMap = [DataUnitContainer: Int]
+
+// Storing percentage of current appearance in total
 typealias AppearanceResults = [DataUnitContainer: Float]
 
+/// Store snapshots for each data index
 class DatasourceConfiguration {
   private var snapshots: [Int: DatasourceSnapshot] = [:]
   init(dataSet: [[DataUnit]?], appearanceMap: AppearanceMap) {
     snapshots = buildSnapshots(from: dataSet, with: appearanceMap)
   }
-  
+
   func snapshot(at index: Int) -> DatasourceSnapshot? {
     return snapshots[index]
   }
@@ -45,6 +49,7 @@ class DatasourceConfiguration {
   }
 }
 
+/// Represents a list of `DataUnit`'s appearance in percentage at certain point
 class DatasourceSnapshot {
   let appearanceResults: AppearanceResults
   init(appearanceResults: AppearanceResults) {
@@ -52,7 +57,7 @@ class DatasourceSnapshot {
   }
 }
 
-// FIXME: Workaround for not able to apply Hashable to DataUnit
+// Workaround for not being able to apply Hashable to DataUnit
 struct DataUnitContainer: DataUnit, Hashable {
   let x: UInt
   let y: UInt

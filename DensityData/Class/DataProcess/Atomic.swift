@@ -2,6 +2,7 @@
 
 import Foundation
 
+/// Thread-safe property
 final class Atomic<T> {
   private let queue = DispatchQueue(label: "atomic.queue")
   private var _value: T
@@ -12,7 +13,7 @@ final class Atomic<T> {
   var value: T {
     get { return queue.sync { _value} }
   }
-  
+
   func modify(_ transform: (inout T) -> ()) {
     queue.sync { transform(&_value) }
   }

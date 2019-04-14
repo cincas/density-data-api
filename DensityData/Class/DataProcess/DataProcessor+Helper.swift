@@ -3,6 +3,7 @@
 import Foundation
 
 struct DataProcessorHelper {
+  /// Convert given data set into appearance count map which indexed by `DataUnitContainer`
   static func process(dataSet: [DataUnit]) -> AppearanceMap {
     let dataUnitContainers = dataSet.map { DataUnitContainer(dataUnit: $0) }
     var appearanceMap: AppearanceMap = [:]

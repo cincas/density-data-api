@@ -6,10 +6,17 @@ protocol DataProcessorDelegate: class {
   func progressStatusUpdate(_ status: DataProcessor.Status)
 }
 
+/// Load data from `APIClient` asynchronously and generate `DatasourceConfiguration`
 class DataProcessor {
+  /// Represent processing status
   enum Status {
+    /// Amount of processed items
     case processed(Int)
+    
+    /// Building appearance snapshots
     case buildingSnapshots
+    
+    /// Loading data failed at index
     case failed(Int)
   }
   
@@ -23,6 +30,10 @@ class DataProcessor {
     self.apiClient = apiClient
   }
   
+  /// Start async loading
+  ///
+  /// - Parameters:
+  ///   - completion: Completion callback
   func start(_ completion: @escaping (DatasourceConfiguration) -> Void) {
     workItem?.cancel()
     workItem = nil
@@ -35,6 +46,8 @@ class DataProcessor {
     queue.async(execute: item)
   }
   
+  
+  /// Stops loading process
   func stop() {
     workItem?.cancel()
     workItem = nil
@@ -47,6 +60,9 @@ class DataProcessor {
 }
 
 private extension DataProcessor {
+  /// Actual async loading process
+  ///
+  /// - Returns: `DatasourceConfiguration` with pre-built snapshots
   func asyncLoad() -> DatasourceConfiguration {
     let datasource = apiClient.datasource
     
@@ -73,6 +89,12 @@ private extension DataProcessor {
     return configuration
   }
   
+  /// Collect results from completed data tasks
+  ///
+  /// - Parameters:
+  ///   - dataTasks: An array of completed `DataProcessTask`
+  ///
+  /// - Returns: An array with `DataUnit` arrays
   func processDataTasks(_ dataTasks: [DataProcessTask]) -> [[DataUnit]?] {
     return dataTasks.sorted { $0.index < $1.index }
       .map { task -> [DataUnit]? in
@@ -92,6 +114,7 @@ private extension DataProcessor {
     }
   }
   
+  /// Update `processedItems` and notify delegate
   func onDataProcessed() {
     processedItems.modify { [weak self] in
       $0 += 1
@@ -100,6 +123,7 @@ private extension DataProcessor {
   }
 }
 
+/// A wrapper class for handling `APIClient.data(at:)`
 class DataProcessTask {
   private let apiClient: APIClient
   private var result: Result<[DataUnit]?, APIError>?
@@ -109,6 +133,12 @@ class DataProcessTask {
     self.apiClient = apiClient
   }
   
+  /// Start request in given parameters
+  ///
+  /// - Parameters:
+  ///   - queue: A `DispatchQueue` to execute request
+  ///   - maxRetry: Maximum retry times
+  ///   - completion: Completion callback
   func load(in queue: DispatchQueue,
             maxRetry: Int, completion: @escaping (Int) -> Void) {
     queue.async {
@@ -116,10 +146,16 @@ class DataProcessTask {
     }
   }
   
+  /// Get result
+  ///
+  /// Get final result for `APIClient.getData(at:)`
+  /// If result was accessed before data is returned from request,
+  /// default error `APIError.dataError` will return.
   func getResult() -> Result<[DataUnit]?, APIError> {
     return result ?? .failed(.dataError)
   }
   
+  /// Get data from `APIClient` and handle result
   private func getData(maxRetry: Int, completion: @escaping (Int) -> Void) {
     var failedAttempt = 0
     var finalResult: Result<[DataUnit]?, APIError>? = nil
