@@ -3,11 +3,16 @@
 import Foundation
 
 protocol DataProcessorDelegate: class {
-  func progressUpdated(_ progress: Int)
-  func processFailed(at index: Int)
+  func progressStatusUpdate(_ status: DataProcessor.Status)
 }
 
 class DataProcessor {
+  enum Status {
+    case processed(Int)
+    case buildingSnapshots
+    case failed(Int)
+  }
+  
   weak var delegate: DataProcessorDelegate?
   private let apiClient: APIClient
   private let queue = DispatchQueue(label: "data.process", qos: DispatchQoS.utility)
@@ -61,6 +66,7 @@ private extension DataProcessor {
     }
     
     _ = taskGroup.wait(timeout: .distantFuture)
+    delegate?.progressStatusUpdate(.buildingSnapshots)
     let dataSet = processDataTasks(dataTasks)
     let flattend = Array(dataSet.compactMap { $0 }.joined())
     let appearanceMap = DataProcessorHelper.process(dataSet: flattend)
@@ -73,7 +79,7 @@ private extension DataProcessor {
       .map { task -> [DataUnit]? in
         let index = task.index
         guard let dataResult = task.result else {
-          delegate?.processFailed(at: index)
+          delegate?.progressStatusUpdate(.failed(index))
           return nil
         }
         
@@ -84,7 +90,7 @@ private extension DataProcessor {
           }
           
         case .failed(_):
-          delegate?.processFailed(at: index)
+          delegate?.progressStatusUpdate(.failed(index))
         }
         
         return nil
@@ -94,7 +100,7 @@ private extension DataProcessor {
   func onDataProcessed() {
     processedItems.modify { [weak self] in
       $0 += 1
-      self?.delegate?.progressUpdated($0)
+      self?.delegate?.progressStatusUpdate(.processed($0))
     }
   }
 }

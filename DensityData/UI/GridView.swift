@@ -5,10 +5,7 @@ import UIKit
 class GridView: UIView {
   private var viewModel: DataGridViewModel?
   private var ratioConstraint: NSLayoutConstraint?
-  private var gridLayer: GridLayer? {
-    return layer.sublayers?.compactMap { $0 as? GridLayer }.first
-  }
-  
+  private var gridLayer: GridLayer?
   private var currentIndex: Int = 0
   var shouldRedraw: Bool = false
   deinit {
@@ -33,6 +30,7 @@ class GridView: UIView {
     layer.addSublayer(gridLayer)
     gridLayer.frame = bounds
     gridLayer.drawGrid()
+    self.gridLayer = gridLayer
   }
   
   override func layoutSubviews() {
@@ -64,6 +62,7 @@ class GridView: UIView {
     ratioConstraint?.isActive = true
     setNeedsUpdateConstraints()
     gridLayer?.removeFromSuperlayer()
+    gridLayer = nil
   }
 
 }
@@ -91,6 +90,7 @@ class GridLayer: CAShapeLayer {
       let layer = CAShapeLayer()
       layer.frame = rect
       layer.backgroundColor = UIColor.green.cgColor
+      layer.opacity = 0.0
       return layer
     }
     
@@ -109,13 +109,15 @@ class GridLayer: CAShapeLayer {
   
   func update(by snapshot: DatasourceSnapshot) {
     let appearanceResults = snapshot.appearanceResults
+    CATransaction.begin()
     tileMap.forEach { index, layer in
       guard let unit = (appearanceResults.keys.first { $0.x == index.item && $0.y == index.section }),
         let value = appearanceResults[unit] else {
-        layer.opacity = 0.0
-        return
+          layer.opacity = 0.0
+          return
       }
       layer.opacity = value
     }
+    CATransaction.commit()
   }
 }

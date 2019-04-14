@@ -11,6 +11,8 @@ protocol DataGridViewModelDelegate: class {
   func loadingProgressUpdated(_ progress: CGFloat)
   
   func loadingFailedAt(_ index: Int)
+  
+  func buildingSnapshots()
 }
 
 class DataGridViewModel {
@@ -69,14 +71,15 @@ class DataGridViewModel {
 }
 
 extension DataGridViewModel: DataProcessorDelegate {
-  func progressUpdated(_ progress: Int) {
-    let percentage = CGFloat(progress + 1) / CGFloat(datasource.dataSize)
-    delegate?.loadingProgressUpdated(percentage)
-  }
-  
-  func processFailed(at index: Int) {
-    // TODO: Collect errors at these points
-    print("Failed getting data at \(index)")
-    delegate?.loadingFailedAt(index)
+  func progressStatusUpdate(_ status: DataProcessor.Status) {
+    switch status {
+    case let .processed(index):
+      let percentage = CGFloat(index + 1) / CGFloat(datasource.dataSize)
+      delegate?.loadingProgressUpdated(percentage)
+    case let .failed(index):
+      delegate?.loadingFailedAt(index)
+    case .buildingSnapshots:
+      delegate?.buildingSnapshots()
+    }
   }
 }

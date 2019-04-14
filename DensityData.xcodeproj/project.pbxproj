@@ -21,6 +21,7 @@
 		F63A525D2262CEFE009E506D /* Atomic.swift in Sources */ = {isa = PBXBuildFile; fileRef = F63A525C2262CEFE009E506D /* Atomic.swift */; };
 		F63A525F2262CF3F009E506D /* DataProcessor+Helper.swift in Sources */ = {isa = PBXBuildFile; fileRef = F63A525E2262CF3F009E506D /* DataProcessor+Helper.swift */; };
 		F63A52632262D208009E506D /* AtomicTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = F63A52622262D208009E506D /* AtomicTests.swift */; };
+		F63A526522631CED009E506D /* ProgressView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F63A526422631CED009E506D /* ProgressView.swift */; };
 		F68C07CB225F52AD00B54F6A /* DataGridViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = F68C07CA225F52AD00B54F6A /* DataGridViewModel.swift */; };
 		F68C07CD225F535C00B54F6A /* API.swift in Sources */ = {isa = PBXBuildFile; fileRef = F68C07CC225F535C00B54F6A /* API.swift */; };
 		F68C07CF225F586D00B54F6A /* MockAPIClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = F68C07CE225F586D00B54F6A /* MockAPIClient.swift */; };
@@ -74,6 +75,7 @@
 		F63A525C2262CEFE009E506D /* Atomic.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Atomic.swift; sourceTree = "<group>"; };
 		F63A525E2262CF3F009E506D /* DataProcessor+Helper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "DataProcessor+Helper.swift"; sourceTree = "<group>"; };
 		F63A52622262D208009E506D /* AtomicTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AtomicTests.swift; sourceTree = "<group>"; };
+		F63A526422631CED009E506D /* ProgressView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProgressView.swift; sourceTree = "<group>"; };
 		F68C07CA225F52AD00B54F6A /* DataGridViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DataGridViewModel.swift; sourceTree = "<group>"; };
 		F68C07CC225F535C00B54F6A /* API.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = API.swift; sourceTree = "<group>"; };
 		F68C07CE225F586D00B54F6A /* MockAPIClient.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockAPIClient.swift; sourceTree = "<group>"; };
@@ -184,6 +186,7 @@
 				F68C07CA225F52AD00B54F6A /* DataGridViewModel.swift */,
 				F68E15082260113600AFA68E /* GridView.swift */,
 				F68E150A2260171400AFA68E /* UIView+Extensions.swift */,
+				F63A526422631CED009E506D /* ProgressView.swift */,
 			);
 			path = UI;
 			sourceTree = "<group>";
@@ -321,6 +324,7 @@
 				F68C07CD225F535C00B54F6A /* API.swift in Sources */,
 				F68E15092260113600AFA68E /* GridView.swift in Sources */,
 				F633A5EA225F4B4200A230BB /* AppDelegate.swift in Sources */,
+				F63A526522631CED009E506D /* ProgressView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

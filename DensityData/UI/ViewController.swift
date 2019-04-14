@@ -45,10 +45,11 @@ class ViewController: UIViewController {
     return view
   }()
   
-  private let progressView: UIProgressView = {
-    let view = UIProgressView(progressViewStyle: .bar)
+  private let progressView: ProgressView = {
+    let view = ProgressView(progressViewStyle: .bar)
     view.backgroundColor = .red
     view.tintColor = .blue
+    view.statusTextColor = .white
     return view
   }()
   
@@ -77,7 +78,7 @@ class ViewController: UIViewController {
      UIView()]
       .forEach { contentView.addArrangedSubview($0) }
     
-    scrollView.pinEdges(to: view.readableContentGuide)
+    scrollView.pinEdges(to: view.layoutMarginsGuide)
     containerView.pinEdges(to: scrollView)
     contentView.translatesAutoresizingMaskIntoConstraints = false
     gridView.translatesAutoresizingMaskIntoConstraints = false
@@ -158,6 +159,7 @@ extension ViewController: DataGridViewModelDelegate {
       self.indexLabel.isHidden = false
       self.gridView.drawGrid()
       self.onIndexChanged(to: 0)
+      self.progressView.status = "Completed"
     }
   }
   
@@ -165,10 +167,13 @@ extension ViewController: DataGridViewModelDelegate {
     DispatchQueue.main.async {
       self.progressView.progress = Float(progress)
     }
-    
   }
   
-  func loadingFailedAt(_ index: Int) {
-    
+  func loadingFailedAt(_ index: Int) {}
+  
+  func buildingSnapshots() {
+    DispatchQueue.main.async {
+      self.progressView.status = "Building snapshots"
+    }
   }
 }
