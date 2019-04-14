@@ -27,9 +27,8 @@ class DataProcessor {
     workItem?.cancel()
     workItem = nil
     
-    let item = DispatchWorkItem { [weak self] in
-      guard let sself = self else { return }
-      completion(sself.asyncLoad())
+    let item = DispatchWorkItem { [unowned self] in
+      completion(self.asyncLoad())
     }
     
     workItem = item
@@ -78,11 +77,7 @@ private extension DataProcessor {
     return dataTasks.sorted { $0.index < $1.index }
       .map { task -> [DataUnit]? in
         let index = task.index
-        guard let dataResult = task.result else {
-          delegate?.progressStatusUpdate(.failed(index))
-          return nil
-        }
-        
+        let dataResult = task.getResult()
         switch dataResult {
         case let .success(values):
           if let units = values {
@@ -107,7 +102,7 @@ private extension DataProcessor {
 
 class DataProcessTask {
   private let apiClient: APIClient
-  private(set) var result: Result<[DataUnit]?, APIError>?
+  private var result: Result<[DataUnit]?, APIError>?
   let index: Int
   init(index: Int, apiClient: APIClient) {
     self.index = index
@@ -121,9 +116,13 @@ class DataProcessTask {
     }
   }
   
+  func getResult() -> Result<[DataUnit]?, APIError> {
+    return result ?? .failed(.dataError)
+  }
+  
   private func getData(maxRetry: Int, completion: @escaping (Int) -> Void) {
     var failedAttempt = 0
-    var finalResult: Result<[DataUnit]?, APIError> = .failed(.dataError)
+    var finalResult: Result<[DataUnit]?, APIError>? = nil
     while failedAttempt < maxRetry {
       let result = apiClient.data(at: index)
       guard case .success(_) = result else {
