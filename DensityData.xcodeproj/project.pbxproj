@@ -15,7 +15,6 @@
 		F633A5F4225F4B4200A230BB /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = F633A5F2225F4B4200A230BB /* LaunchScreen.storyboard */; };
 		F633A5FF225F4B4200A230BB /* DataGridViewModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = F633A5FE225F4B4200A230BB /* DataGridViewModelTests.swift */; };
 		F633A60A225F4BAF00A230BB /* README.md in Resources */ = {isa = PBXBuildFile; fileRef = F633A609225F4BAE00A230BB /* README.md */; };
-		F63A52572260BA30009E506D /* API+Test.swift in Sources */ = {isa = PBXBuildFile; fileRef = F63A52562260BA30009E506D /* API+Test.swift */; };
 		F63A52592260BD39009E506D /* APIProtocolHelperTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = F63A52582260BD39009E506D /* APIProtocolHelperTests.swift */; };
 		F63A525B2262CE8B009E506D /* DatasourceConfiguration.swift in Sources */ = {isa = PBXBuildFile; fileRef = F63A525A2262CE8B009E506D /* DatasourceConfiguration.swift */; };
 		F63A525D2262CEFE009E506D /* Atomic.swift in Sources */ = {isa = PBXBuildFile; fileRef = F63A525C2262CEFE009E506D /* Atomic.swift */; };
@@ -71,7 +70,6 @@
 		F633A5FE225F4B4200A230BB /* DataGridViewModelTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DataGridViewModelTests.swift; sourceTree = "<group>"; };
 		F633A600225F4B4200A230BB /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		F633A609225F4BAE00A230BB /* README.md */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; };
-		F63A52562260BA30009E506D /* API+Test.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "API+Test.swift"; sourceTree = "<group>"; };
 		F63A52582260BD39009E506D /* APIProtocolHelperTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = APIProtocolHelperTests.swift; sourceTree = "<group>"; };
 		F63A525A2262CE8B009E506D /* DatasourceConfiguration.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DatasourceConfiguration.swift; sourceTree = "<group>"; };
 		F63A525C2262CEFE009E506D /* Atomic.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Atomic.swift; sourceTree = "<group>"; };
@@ -169,7 +167,6 @@
 			children = (
 				F68C07CC225F535C00B54F6A /* API.swift */,
 				F68E15062260080B00AFA68E /* API+DensityData.swift */,
-				F63A52562260BA30009E506D /* API+Test.swift */,
 			);
 			path = API;
 			sourceTree = "<group>";
@@ -320,7 +317,6 @@
 			files = (
 				F68E15112260292400AFA68E /* DataProcessor.swift in Sources */,
 				F63A526722632FEB009E506D /* Throttler.swift in Sources */,
-				F63A52572260BA30009E506D /* API+Test.swift in Sources */,
 				F68E150B2260171400AFA68E /* UIView+Extensions.swift in Sources */,
 				F68C07CB225F52AD00B54F6A /* DataGridViewModel.swift in Sources */,
 				F633A5EC225F4B4200A230BB /* ViewController.swift in Sources */,
