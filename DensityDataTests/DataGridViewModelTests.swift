@@ -39,11 +39,9 @@ class DataGridViewModelTests: XCTestCase {
     viewModel.loadDatasource()
     
     let snapshotExpectation = expectation(description: "Snapshot should be ready")
-    var shouldBreak = false
     var snapshot: DatasourceSnapshot?
     while snapshot == nil {
       snapshot = viewModel.snapshot(at: 0)
-      shouldBreak = snapshot != nil
     }
     
     guard let actual = snapshot else {

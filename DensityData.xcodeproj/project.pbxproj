@@ -17,6 +17,9 @@
 		F633A60A225F4BAF00A230BB /* README.md in Resources */ = {isa = PBXBuildFile; fileRef = F633A609225F4BAE00A230BB /* README.md */; };
 		F63A52572260BA30009E506D /* API+Test.swift in Sources */ = {isa = PBXBuildFile; fileRef = F63A52562260BA30009E506D /* API+Test.swift */; };
 		F63A52592260BD39009E506D /* APIProtocolHelperTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = F63A52582260BD39009E506D /* APIProtocolHelperTests.swift */; };
+		F63A525B2262CE8B009E506D /* DatasourceConfiguration.swift in Sources */ = {isa = PBXBuildFile; fileRef = F63A525A2262CE8B009E506D /* DatasourceConfiguration.swift */; };
+		F63A525D2262CEFE009E506D /* Atmoic.swift in Sources */ = {isa = PBXBuildFile; fileRef = F63A525C2262CEFE009E506D /* Atmoic.swift */; };
+		F63A525F2262CF3F009E506D /* DataProcessor+Helper.swift in Sources */ = {isa = PBXBuildFile; fileRef = F63A525E2262CF3F009E506D /* DataProcessor+Helper.swift */; };
 		F68C07CB225F52AD00B54F6A /* DataGridViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = F68C07CA225F52AD00B54F6A /* DataGridViewModel.swift */; };
 		F68C07CD225F535C00B54F6A /* API.swift in Sources */ = {isa = PBXBuildFile; fileRef = F68C07CC225F535C00B54F6A /* API.swift */; };
 		F68C07CF225F586D00B54F6A /* MockAPIClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = F68C07CE225F586D00B54F6A /* MockAPIClient.swift */; };
@@ -66,6 +69,9 @@
 		F633A609225F4BAE00A230BB /* README.md */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; };
 		F63A52562260BA30009E506D /* API+Test.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "API+Test.swift"; sourceTree = "<group>"; };
 		F63A52582260BD39009E506D /* APIProtocolHelperTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = APIProtocolHelperTests.swift; sourceTree = "<group>"; };
+		F63A525A2262CE8B009E506D /* DatasourceConfiguration.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DatasourceConfiguration.swift; sourceTree = "<group>"; };
+		F63A525C2262CEFE009E506D /* Atmoic.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Atmoic.swift; sourceTree = "<group>"; };
+		F63A525E2262CF3F009E506D /* DataProcessor+Helper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "DataProcessor+Helper.swift"; sourceTree = "<group>"; };
 		F68C07CA225F52AD00B54F6A /* DataGridViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DataGridViewModel.swift; sourceTree = "<group>"; };
 		F68C07CC225F535C00B54F6A /* API.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = API.swift; sourceTree = "<group>"; };
 		F68C07CE225F586D00B54F6A /* MockAPIClient.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockAPIClient.swift; sourceTree = "<group>"; };
@@ -148,6 +154,26 @@
 			path = Frameworks;
 			sourceTree = "<group>";
 		};
+		F63A52602262CF8D009E506D /* API */ = {
+			isa = PBXGroup;
+			children = (
+				F68C07CC225F535C00B54F6A /* API.swift */,
+				F68E15062260080B00AFA68E /* API+DensityData.swift */,
+				F63A52562260BA30009E506D /* API+Test.swift */,
+			);
+			path = API;
+			sourceTree = "<group>";
+		};
+		F63A52612262CF97009E506D /* DataProcess */ = {
+			isa = PBXGroup;
+			children = (
+				F63A525C2262CEFE009E506D /* Atmoic.swift */,
+				F68E15102260292400AFA68E /* DataProcessor.swift */,
+				F63A525E2262CF3F009E506D /* DataProcessor+Helper.swift */,
+			);
+			path = DataProcess;
+			sourceTree = "<group>";
+		};
 		F68E150C2260264300AFA68E /* UI */ = {
 			isa = PBXGroup;
 			children = (
@@ -162,10 +188,9 @@
 		F68E150D2260265300AFA68E /* Class */ = {
 			isa = PBXGroup;
 			children = (
-				F68C07CC225F535C00B54F6A /* API.swift */,
-				F68E15062260080B00AFA68E /* API+DensityData.swift */,
-				F63A52562260BA30009E506D /* API+Test.swift */,
-				F68E15102260292400AFA68E /* DataProcessor.swift */,
+				F63A52612262CF97009E506D /* DataProcess */,
+				F63A52602262CF8D009E506D /* API */,
+				F63A525A2262CE8B009E506D /* DatasourceConfiguration.swift */,
 			);
 			path = Class;
 			sourceTree = "<group>";
@@ -286,7 +311,10 @@
 				F68E150B2260171400AFA68E /* UIView+Extensions.swift in Sources */,
 				F68C07CB225F52AD00B54F6A /* DataGridViewModel.swift in Sources */,
 				F633A5EC225F4B4200A230BB /* ViewController.swift in Sources */,
+				F63A525B2262CE8B009E506D /* DatasourceConfiguration.swift in Sources */,
+				F63A525F2262CF3F009E506D /* DataProcessor+Helper.swift in Sources */,
 				F68E15072260080B00AFA68E /* API+DensityData.swift in Sources */,
+				F63A525D2262CEFE009E506D /* Atmoic.swift in Sources */,
 				F68C07CD225F535C00B54F6A /* API.swift in Sources */,
 				F68E15092260113600AFA68E /* GridView.swift in Sources */,
 				F633A5EA225F4B4200A230BB /* AppDelegate.swift in Sources */,

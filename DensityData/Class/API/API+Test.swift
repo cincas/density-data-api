@@ -39,12 +39,14 @@ struct TestAPI: APIClient {
   let datasource: Datasource
   
   init() {
-    let testGrid = TestGrid(columns: 30, rows: 30, dataSize: 1000)
+    let testGrid = TestGrid(columns: 30, rows: 30, dataSize: 10000)
     datasource = testGrid
     dataSet = testGrid.mockDataSet()
   }
   
   func data(at index: Int) -> Result<[DataUnit]?, APIError> {
+    let sleepTime = useconds_t(Int.random(in: 0...5) * 1000)
+    usleep(sleepTime)
     return .success(dataSet[index])
   }
 }
