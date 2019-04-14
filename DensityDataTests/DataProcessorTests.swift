@@ -4,50 +4,7 @@ import XCTest
 @testable import DensityData
 import DensityDataAPI
 
-// FIXME: Need to improve performance of DataProcessor
 class DataProcessorTests: XCTestCase {
-  func testProcessing() {
-    let dataSet: [[DataUnit]?] = [
-      [MockDataUnit(x: 0, y: 0)],
-      [MockDataUnit(x: 1, y: 1), MockDataUnit(x: 0, y: 2), MockDataUnit(x: 0, y: 1)],
-      [ExceptionDataUnit(isAccepted: true)],
-      [MockDataUnit(x: 1, y: 0), MockDataUnit(x: 1, y: 2), MockDataUnit(x: 0, y: 0)],
-      nil,
-      [MockDataUnit(x: 2, y: 1)],
-      [MockDataUnit(x: 2, y: 0)]
-    ]
-    
-    let expectedAppearanceMap: AppearanceMap = [
-      DataUnitContainer(dataUnit: MockDataUnit(x: 0, y: 0)): 2,
-      DataUnitContainer(dataUnit: MockDataUnit(x: 0, y: 1)): 1,
-      DataUnitContainer(dataUnit: MockDataUnit(x: 0, y: 2)): 1,
-      DataUnitContainer(dataUnit: MockDataUnit(x: 1, y: 0)): 1,
-      DataUnitContainer(dataUnit: MockDataUnit(x: 1, y: 1)): 1,
-      DataUnitContainer(dataUnit: MockDataUnit(x: 1, y: 2)): 1,
-      DataUnitContainer(dataUnit: MockDataUnit(x: 2, y: 0)): 1,
-      DataUnitContainer(dataUnit: MockDataUnit(x: 2, y: 1)): 1,
-      DataUnitContainer(dataUnit: MockDataUnit(x: 2, y: 2)): NSNotFound,
-    ]
-    
-    let datasource = MockDatasource(columns: 3, rows: 3, dataSize: UInt(dataSet.count))
-    let processor = DataProcessor(apiClient: MockAPIClient(datasource: datasource,
-                                                           dataSet: dataSet))
-    
-    let loadExpectation = expectation(description: "Data set loading")
-    processor.start { configuration in
-      expectedAppearanceMap.forEach { unit, value in
-        guard let actual = configuration.appearanceMap[unit] else {
-          XCTAssertTrue(value == NSNotFound, "Missing appearance")
-          return
-        }
-        XCTAssertTrue(value == actual, "Appearance count should be same")
-      }
-      loadExpectation.fulfill()
-    }
-    
-    wait(for: [loadExpectation], timeout: 10.0)
-  }
-  
   func testSnapshot() {
     let dataSet: [[DataUnit]?] = [
       [MockDataUnit(x: 0, y: 0)],
@@ -90,7 +47,10 @@ class DataProcessorTests: XCTestCase {
     let loadExpectation = expectation(description: "Data set loading")
     processor.start { configuration in
       expectedResults.forEach { index, expected in
-        let snapshot = configuration.snapshot(at: index)
+        guard let snapshot = configuration.snapshot(at: index) else {
+          XCTFail("Snapshot should not be nil")
+          return
+        }
         self.assertAppearanceResult(expected, with: snapshot.appearanceResults)
       }
       loadExpectation.fulfill()

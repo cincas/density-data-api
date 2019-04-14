@@ -36,9 +36,38 @@ class DataProcessor {
     workItem = nil
     processedItems = Atomic(0)
   }
+  
+  deinit {
+    stop()
+  }
 }
 
 private extension DataProcessor {
+  func asyncLoad() -> DatasourceConfiguration {
+    let datasource = apiClient.datasource
+    
+    let dataTasks: [DataProcessTask] = (0..<Int(datasource.dataSize)).map { index -> DataProcessTask in
+      return DataProcessTask(index: index, apiClient: apiClient)
+    }
+    let taskQueue = DispatchQueue(label: "task.queue", attributes: .concurrent)
+    let taskGroup = DispatchGroup()
+    
+    dataTasks.forEach {
+      taskGroup.enter()
+      $0.load(in: taskQueue, maxRetry: 3) { [weak self] index in
+        self?.onDataProcessed()
+        taskGroup.leave()
+      }
+    }
+    
+    _ = taskGroup.wait(timeout: .distantFuture)
+    let dataSet = processDataTasks(dataTasks)
+    let flattend = Array(dataSet.compactMap { $0 }.joined())
+    let appearanceMap = DataProcessorHelper.process(dataSet: flattend)
+    let configuration = DatasourceConfiguration(dataSet: dataSet, appearanceMap: appearanceMap)
+    return configuration
+  }
+  
   func processDataTasks(_ dataTasks: [DataProcessTask]) -> [[DataUnit]?] {
     return dataTasks.sorted { $0.index < $1.index }
       .map { task -> [DataUnit]? in
@@ -68,43 +97,18 @@ private extension DataProcessor {
       self?.delegate?.progressUpdated($0)
     }
   }
-  
-  func asyncLoad() -> DatasourceConfiguration {
-    let datasource = apiClient.datasource
-    
-    let dataTasks: [DataProcessTask] = (0..<Int(datasource.dataSize)).map { index -> DataProcessTask in
-      return DataProcessTask(index: index, apiClient: apiClient)
-    }
-    let taskQueue = DispatchQueue(label: "task.queue", attributes: .concurrent)
-    let taskGroup = DispatchGroup()
-    
-    dataTasks.forEach {
-      taskGroup.enter()
-      $0.load(in: taskQueue, group: taskGroup, maxRetry: 3) { [weak self] index in
-        self?.onDataProcessed()
-        taskGroup.leave()
-      }
-    }
-    
-    _ = taskGroup.wait(timeout: .distantFuture)
-    let dataSet = processDataTasks(dataTasks)
-    let flattend = Array(dataSet.compactMap { $0 }.joined())
-    let appearanceMap = DataProcessorHelper.process(dataSet: flattend)
-    let configuration = DatasourceConfiguration(dataSet: dataSet, appearanceMap: appearanceMap)
-    return configuration
-  }
 }
 
 class DataProcessTask {
+  private let apiClient: APIClient
+  private(set) var result: Result<[DataUnit]?, APIError>?
   let index: Int
-  let apiClient: APIClient
-  var result: Result<[DataUnit]?, APIError>?
   init(index: Int, apiClient: APIClient) {
     self.index = index
     self.apiClient = apiClient
   }
   
-  func load(in queue: DispatchQueue, group taskGroup: DispatchGroup,
+  func load(in queue: DispatchQueue,
             maxRetry: Int, completion: @escaping (Int) -> Void) {
     queue.async {
       self.getData(maxRetry: maxRetry, completion: completion)

@@ -13,8 +13,9 @@ struct MockAPIClient: APIClient {
   }
   
   func data(at index: Int) -> Result<[DataUnit]?, APIError> {
+    let sleepTime = useconds_t(Int.random(in: 0...5) * 1000)
+    usleep(sleepTime)
     let dataUnits = dataSet[index]
-    
     if let exceptionDataUnit = (dataUnits?.compactMap { $0 as? ExceptionDataUnit }.first) {
       return exceptionDataUnit.isAccepted ? .failed(.dataError)
         : .failed(.unknown(NSError(domain: "com.cincas.api.error", code: 0, userInfo: nil)))
