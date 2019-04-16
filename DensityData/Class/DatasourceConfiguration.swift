@@ -5,8 +5,8 @@ import Foundation
 /// Storing appearance total count
 typealias AppearanceMap = [DataUnitContainer: Int]
 
-// Storing percentage of current appearance in total
-typealias AppearanceResults = [DataUnitContainer: Float]
+/// Represents a list of `DataUnit`'s appearance in percentage at certain point
+typealias DatasourceSnapshot = [DataUnitContainer: Float]
 
 /// Store snapshots for each data index
 class DatasourceConfiguration {
@@ -25,8 +25,8 @@ class DatasourceConfiguration {
   
   private func buildSnapshots(from dataSet: [[DataUnit]?],
                               with appearanceMap: AppearanceMap) -> [DatasourceSnapshot] {
-    var lastAppearanceResult: AppearanceResults = [:]
-    return dataSet.map { dataUnits -> AppearanceResults in
+    var lastAppearanceResult: DatasourceSnapshot = [:]
+    return dataSet.map { dataUnits -> DatasourceSnapshot in
       guard let dataUnits = dataUnits else  {
         return lastAppearanceResult
       }
@@ -39,15 +39,7 @@ class DatasourceConfiguration {
       }
       
       return lastAppearanceResult
-      }.map { DatasourceSnapshot(appearanceResults: $0) }
-  }
-}
-
-/// Represents a list of `DataUnit`'s appearance in percentage at certain point
-class DatasourceSnapshot {
-  let appearanceResults: AppearanceResults
-  init(appearanceResults: AppearanceResults) {
-    self.appearanceResults = appearanceResults
+      }
   }
 }
 

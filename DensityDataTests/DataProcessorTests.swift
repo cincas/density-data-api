@@ -16,7 +16,7 @@ class DataProcessorTests: XCTestCase {
       [MockDataUnit(x: 2, y: 0), MockDataUnit(x: 0, y: 0)]
     ]
     
-    let expectedResults: [Int: AppearanceResults] = [
+    let expectedResults: [Int: DatasourceSnapshot] = [
       2: [
         DataUnitContainer(dataUnit: MockDataUnit(x: 0, y: 0)): 0.25,
       ],
@@ -51,7 +51,7 @@ class DataProcessorTests: XCTestCase {
           XCTFail("Snapshot should not be nil")
           return
         }
-        self.assertAppearanceResult(expected, with: snapshot.appearanceResults)
+        self.assertAppearanceResult(expected, with: snapshot)
       }
       loadExpectation.fulfill()
     }
@@ -59,7 +59,7 @@ class DataProcessorTests: XCTestCase {
     wait(for: [loadExpectation], timeout: 10.0)
   }
   
-  private func assertAppearanceResult(_ expected: AppearanceResults, with actual: AppearanceResults) {
+  private func assertAppearanceResult(_ expected: DatasourceSnapshot, with actual: DatasourceSnapshot) {
     expected.forEach { unit, value in
       guard let actual = actual[unit] else {
         XCTFail("Missing appearance result")

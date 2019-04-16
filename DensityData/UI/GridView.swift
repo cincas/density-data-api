@@ -108,12 +108,10 @@ class GridLayer: CAShapeLayer {
   }
   
   func update(by snapshot: DatasourceSnapshot) {
-    let appearanceResults = snapshot.appearanceResults
-    
     CATransaction.begin()
     tileMap.forEach { index, layer in
       let unitContainer = DataUnitContainer(x: UInt(index.item), y: UInt(index.section))
-      let opacity = appearanceResults[unitContainer]
+      let opacity = snapshot[unitContainer]
       layer.opacity = opacity ?? 0.0
     }
     CATransaction.commit()

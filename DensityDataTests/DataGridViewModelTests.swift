@@ -49,10 +49,10 @@ class DataGridViewModelTests: XCTestCase {
       return
     }
     
-    let expected = DatasourceSnapshot(appearanceResults: [
-        DataUnitContainer(dataUnit: MockDataUnit(x: 0, y: 0)): 0.25
-      ])
-    XCTAssertTrue(actual.appearanceResults == expected.appearanceResults)
+    let expected: DatasourceSnapshot = [
+      DataUnitContainer(dataUnit: MockDataUnit(x: 0, y: 0)): 0.25
+    ]
+    XCTAssertTrue(actual == expected)
     snapshotExpectation.fulfill()
     
     wait(for: [snapshotExpectation], timeout: 10.0)
