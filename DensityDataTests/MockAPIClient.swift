@@ -76,7 +76,7 @@ struct ExceptionDataUnit: DataUnit {
   
   init(isAccepted: Bool) {
     self.isAccepted = isAccepted
-    x = 0
-    y = 0
+    x = UInt.max
+    y = UInt.max
   }
 }

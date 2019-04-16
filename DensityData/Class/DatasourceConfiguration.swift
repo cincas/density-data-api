@@ -13,7 +13,9 @@ class DatasourceConfiguration {
   private var snapshots: [DatasourceSnapshot] = []
   private var maxAppearance: Int = 0
   init(dataSet: [[DataUnit]?], appearanceMap: AppearanceMap) {
-    maxAppearance = DataProcessorHelper.processMaxAppearance(in: appearanceMap)
+    if let maxAppearance = (appearanceMap.max { $0.value < $1.value }?.value) {
+      self.maxAppearance = maxAppearance
+    }
     snapshots = buildSnapshots(from: dataSet, with: appearanceMap)
   }
 

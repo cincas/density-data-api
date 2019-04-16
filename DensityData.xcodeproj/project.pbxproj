@@ -30,6 +30,7 @@
 		F68E15112260292400AFA68E /* DataProcessor.swift in Sources */ = {isa = PBXBuildFile; fileRef = F68E15102260292400AFA68E /* DataProcessor.swift */; };
 		F68E15152260494800AFA68E /* DataProcessorTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = F68E15142260494800AFA68E /* DataProcessorTests.swift */; };
 		F68E151622604DEF00AFA68E /* DensityDataAPI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F624F12A225F6F4E00AFFEC0 /* DensityDataAPI.framework */; };
+		F6E715D0226585840015BCF2 /* DataProcessorHelperTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = F6E715CF226585840015BCF2 /* DataProcessorHelperTests.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -82,6 +83,7 @@
 		F68E150A2260171400AFA68E /* UIView+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIView+Extensions.swift"; sourceTree = "<group>"; };
 		F68E15102260292400AFA68E /* DataProcessor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DataProcessor.swift; sourceTree = "<group>"; };
 		F68E15142260494800AFA68E /* DataProcessorTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DataProcessorTests.swift; sourceTree = "<group>"; };
+		F6E715CF226585840015BCF2 /* DataProcessorHelperTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DataProcessorHelperTests.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -145,6 +147,7 @@
 				F68E15142260494800AFA68E /* DataProcessorTests.swift */,
 				F63A52582260BD39009E506D /* APIProtocolHelperTests.swift */,
 				F63A52622262D208009E506D /* AtomicTests.swift */,
+				F6E715CF226585840015BCF2 /* DataProcessorHelperTests.swift */,
 			);
 			path = DensityDataTests;
 			sourceTree = "<group>";
@@ -330,6 +333,7 @@
 			files = (
 				F633A5FF225F4B4200A230BB /* DataGridViewModelTests.swift in Sources */,
 				F63A52632262D208009E506D /* AtomicTests.swift in Sources */,
+				F6E715D0226585840015BCF2 /* DataProcessorHelperTests.swift in Sources */,
 				F68C07CF225F586D00B54F6A /* MockAPIClient.swift in Sources */,
 				F63A52592260BD39009E506D /* APIProtocolHelperTests.swift in Sources */,
 				F68E15152260494800AFA68E /* DataProcessorTests.swift in Sources */,
