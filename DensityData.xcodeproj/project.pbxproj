@@ -21,8 +21,6 @@
 		F63A525F2262CF3F009E506D /* DataProcessor+Helper.swift in Sources */ = {isa = PBXBuildFile; fileRef = F63A525E2262CF3F009E506D /* DataProcessor+Helper.swift */; };
 		F63A52632262D208009E506D /* AtomicTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = F63A52622262D208009E506D /* AtomicTests.swift */; };
 		F63A526522631CED009E506D /* ProgressView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F63A526422631CED009E506D /* ProgressView.swift */; };
-		F63A526722632FEB009E506D /* Throttler.swift in Sources */ = {isa = PBXBuildFile; fileRef = F63A526622632FEB009E506D /* Throttler.swift */; };
-		F63A526922633058009E506D /* ThrottlerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = F63A526822633058009E506D /* ThrottlerTests.swift */; };
 		F68C07CB225F52AD00B54F6A /* DataGridViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = F68C07CA225F52AD00B54F6A /* DataGridViewModel.swift */; };
 		F68C07CD225F535C00B54F6A /* API.swift in Sources */ = {isa = PBXBuildFile; fileRef = F68C07CC225F535C00B54F6A /* API.swift */; };
 		F68C07CF225F586D00B54F6A /* MockAPIClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = F68C07CE225F586D00B54F6A /* MockAPIClient.swift */; };
@@ -76,8 +74,6 @@
 		F63A525E2262CF3F009E506D /* DataProcessor+Helper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "DataProcessor+Helper.swift"; sourceTree = "<group>"; };
 		F63A52622262D208009E506D /* AtomicTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AtomicTests.swift; sourceTree = "<group>"; };
 		F63A526422631CED009E506D /* ProgressView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProgressView.swift; sourceTree = "<group>"; };
-		F63A526622632FEB009E506D /* Throttler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Throttler.swift; sourceTree = "<group>"; };
-		F63A526822633058009E506D /* ThrottlerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ThrottlerTests.swift; sourceTree = "<group>"; };
 		F68C07CA225F52AD00B54F6A /* DataGridViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DataGridViewModel.swift; sourceTree = "<group>"; };
 		F68C07CC225F535C00B54F6A /* API.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = API.swift; sourceTree = "<group>"; };
 		F68C07CE225F586D00B54F6A /* MockAPIClient.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockAPIClient.swift; sourceTree = "<group>"; };
@@ -149,7 +145,6 @@
 				F68E15142260494800AFA68E /* DataProcessorTests.swift */,
 				F63A52582260BD39009E506D /* APIProtocolHelperTests.swift */,
 				F63A52622262D208009E506D /* AtomicTests.swift */,
-				F63A526822633058009E506D /* ThrottlerTests.swift */,
 			);
 			path = DensityDataTests;
 			sourceTree = "<group>";
@@ -199,7 +194,6 @@
 				F63A52612262CF97009E506D /* DataProcess */,
 				F63A52602262CF8D009E506D /* API */,
 				F63A525A2262CE8B009E506D /* DatasourceConfiguration.swift */,
-				F63A526622632FEB009E506D /* Throttler.swift */,
 			);
 			path = Class;
 			sourceTree = "<group>";
@@ -316,7 +310,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				F68E15112260292400AFA68E /* DataProcessor.swift in Sources */,
-				F63A526722632FEB009E506D /* Throttler.swift in Sources */,
 				F68E150B2260171400AFA68E /* UIView+Extensions.swift in Sources */,
 				F68C07CB225F52AD00B54F6A /* DataGridViewModel.swift in Sources */,
 				F633A5EC225F4B4200A230BB /* ViewController.swift in Sources */,
@@ -337,7 +330,6 @@
 			files = (
 				F633A5FF225F4B4200A230BB /* DataGridViewModelTests.swift in Sources */,
 				F63A52632262D208009E506D /* AtomicTests.swift in Sources */,
-				F63A526922633058009E506D /* ThrottlerTests.swift in Sources */,
 				F68C07CF225F586D00B54F6A /* MockAPIClient.swift in Sources */,
 				F63A52592260BD39009E506D /* APIProtocolHelperTests.swift in Sources */,
 				F68E15152260494800AFA68E /* DataProcessorTests.swift in Sources */,
