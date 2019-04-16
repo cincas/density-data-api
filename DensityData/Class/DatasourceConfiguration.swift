@@ -10,7 +10,7 @@ typealias AppearanceResults = [DataUnitContainer: Float]
 
 /// Store snapshots for each data index
 class DatasourceConfiguration {
-  private var snapshots: [Int: DatasourceSnapshot] = [:]
+  private var snapshots: [DatasourceSnapshot] = []
   private var maxAppearance: Int = 0
   init(dataSet: [[DataUnit]?], appearanceMap: AppearanceMap) {
     maxAppearance = DataProcessorHelper.processMaxAppearance(in: appearanceMap)
@@ -22,30 +22,22 @@ class DatasourceConfiguration {
   }
   
   private func buildSnapshots(from dataSet: [[DataUnit]?],
-                              with appearanceMap: AppearanceMap) -> [Int: DatasourceSnapshot] {
-    var snapshots: [Int: DatasourceSnapshot] = [:]
-    (0..<dataSet.count).forEach { index in
-      snapshots[index] = makeSnapshot(from: dataSet, with: appearanceMap, at: index)
-    }
-    return snapshots
-  }
-  
-  private func makeSnapshot(from dataSet: [[DataUnit]?],
-                            with appearanceMap: AppearanceMap,
-                            at index: Int) -> DatasourceSnapshot {
-    let slicedDataSet = Array(dataSet.prefix(upTo: index + 1).compactMap { $0 }.joined())
-    let slicedApperanceMap = DataProcessorHelper.process(dataSet: slicedDataSet)
-    let blended = blend(slicedApperanceMap)
-    return DatasourceSnapshot(appearanceResults: blended)
-  }
-
-  private func blend(_ appearanceMap: AppearanceMap) -> AppearanceResults {
-    let list = appearanceMap.compactMap { dataUnit, value -> (DataUnitContainer, Float)? in
-      let percentage = Float(value) / Float(maxAppearance)
-      return (dataUnit, percentage)
-    }
-    
-    return AppearanceResults(uniqueKeysWithValues: list)
+                              with appearanceMap: AppearanceMap) -> [DatasourceSnapshot] {
+    var lastAppearanceResult: AppearanceResults = [:]
+    return dataSet.map { dataUnits -> AppearanceResults in
+      guard let dataUnits = dataUnits else  {
+        return lastAppearanceResult
+      }
+      
+      let unitContainers = dataUnits.map { DataUnitContainer(dataUnit: $0) }
+      unitContainers.forEach { unit in
+        var current = lastAppearanceResult[unit] ?? 0
+        current += Float(1) / Float(maxAppearance)
+        lastAppearanceResult[unit] = current
+      }
+      
+      return lastAppearanceResult
+      }.map { DatasourceSnapshot(appearanceResults: $0) }
   }
 }
 

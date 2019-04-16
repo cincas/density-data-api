@@ -31,12 +31,12 @@ class DataProcessorTests: XCTestCase {
       ],
       6: [
         DataUnitContainer(dataUnit: MockDataUnit(x: 0, y: 0)): 1.0,
-        DataUnitContainer(dataUnit: MockDataUnit(x: 0, y: 1)): 1.0,
-        DataUnitContainer(dataUnit: MockDataUnit(x: 0, y: 2)): 1.0,
-        DataUnitContainer(dataUnit: MockDataUnit(x: 1, y: 0)): 1.0,
-        DataUnitContainer(dataUnit: MockDataUnit(x: 1, y: 1)): 1.0,
-        DataUnitContainer(dataUnit: MockDataUnit(x: 1, y: 2)): 1.0,
-        DataUnitContainer(dataUnit: MockDataUnit(x: 2, y: 1)): 1.0,
+        DataUnitContainer(dataUnit: MockDataUnit(x: 0, y: 1)): 0.25,
+        DataUnitContainer(dataUnit: MockDataUnit(x: 0, y: 2)): 0.25,
+        DataUnitContainer(dataUnit: MockDataUnit(x: 1, y: 0)): 0.25,
+        DataUnitContainer(dataUnit: MockDataUnit(x: 1, y: 1)): 0.25,
+        DataUnitContainer(dataUnit: MockDataUnit(x: 1, y: 2)): 0.25,
+        DataUnitContainer(dataUnit: MockDataUnit(x: 2, y: 1)): 0.25,
       ]
     ]
     
