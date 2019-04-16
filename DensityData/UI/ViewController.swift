@@ -5,8 +5,6 @@ import DensityDataAPI
 
 class ViewController: UIViewController {
   private let viewModel: DataGridViewModel
-  private let throttler = Throttler(pace: 0.1)
-  
   init(viewModel: DataGridViewModel) {
     self.viewModel = viewModel
     super.init(nibName: nil, bundle: nil)
@@ -132,9 +130,7 @@ class ViewController: UIViewController {
   }
   
   private func onIndexChanged(to index: Int) {
-    throttler.start { [weak self] in
-      self?.gridView.indexChanged(to: index)
-    }
+    gridView.indexChanged(to: index)
     indexLabel.text = "Current index: \(index + 1)"
   }
   

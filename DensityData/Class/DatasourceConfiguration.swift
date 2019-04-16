@@ -53,8 +53,12 @@ class DatasourceSnapshot {
 struct DataUnitContainer: DataUnit, Hashable {
   let x: UInt
   let y: UInt
+  init(x: UInt, y: UInt) {
+    self.x = x
+    self.y = y
+  }
+  
   init(dataUnit: DataUnit) {
-    x = dataUnit.x
-    y = dataUnit.y
+    self.init(x: dataUnit.x, y: dataUnit.y)
   }
 }
