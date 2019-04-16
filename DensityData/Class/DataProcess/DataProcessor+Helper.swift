@@ -15,4 +15,8 @@ struct DataProcessorHelper {
     return appearanceMap
   }
 
+  static func processMaxAppearance(in appearanceMap: AppearanceMap) -> Int {
+    let maxAppearance = appearanceMap.max { $0.value < $1.value }
+    return maxAppearance?.value ?? 0
+  }
 }
